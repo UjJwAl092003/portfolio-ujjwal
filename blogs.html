@@ -1,0 +1,345 @@
+<!doctype html>
+<!-- Portfolio Blogs Page -->
+<html>
+  <head>
+    <title>Blogs | Ujjwal Singh</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=no"
+    />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/dark-theme.css" />
+    <meta name="description" content="Blogs by Ujjwal Singh" />
+  </head>
+  <body class="is-preload">
+    <div id="wrapper">
+      <div id="main">
+        <div class="inner">
+          <header id="header">
+            <a href="index.html" class="logo"
+              ><strong>Ujjwal Singh</strong> • Machine Learning</a
+            >
+            <ul class="icons">
+              <li>
+                <a
+                  href="https://github.com/UjJwAl092003"
+                  target="_blank"
+                  rel="noopener"
+                  class="icon brands fa-github"
+                  ><span class="label">GitHub</span></a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://www.linkedin.com/in/ujjwal-singh-616908226/"
+                  target="_blank"
+                  rel="noopener"
+                  class="icon brands fa-linkedin"
+                  ><span class="label">LinkedIn</span></a
+                >
+              </li>
+              <li>
+                <a
+                  href="mailto:ujjwal2392003@gmail.com"
+                  class="icon solid fa-envelope"
+                  ><span class="label">Email</span></a
+                >
+              </li>
+            </ul>
+          </header>
+
+          <section>
+            <header class="major">
+              <h2>Blogs</h2>
+            </header>
+
+            <section class="section" style="margin-bottom: 1.5rem">
+              <header>
+                <h3 style="margin: 0 0 0.75rem 0; font-size: 1rem">
+                  Search &amp; Categories
+                </h3>
+              </header>
+
+              <div class="row gtr-uniform" style="align-items: center">
+                <div class="col-8 col-12-small">
+                  <input
+                    type="text"
+                    id="blogs-search"
+                    placeholder="Search blogs..."
+                    style="width: 100%"
+                  />
+                </div>
+                <div class="col-4 col-12-small">
+                  <select id="blogs-category" style="width: 100%">
+                    <option value="all">All Categories</option>
+                  </select>
+                </div>
+              </div>
+            </section>
+
+            <div class="posts" id="blogs-grid"></div>
+
+            <nav
+              class="pagination"
+              aria-label="Blog pagination"
+              id="blogs-pagination"
+              style="margin-top: 1.5rem"
+            >
+              <a href="#" class="page" id="blogs-prev" aria-label="Previous"
+                >&laquo;</a
+              >
+              <span class="page" id="blogs-page-info">Page 1</span>
+              <a href="#" class="page" id="blogs-next" aria-label="Next"
+                >&raquo;</a
+              >
+            </nav>
+          </section>
+        </div>
+      </div>
+
+      <div id="sidebar">
+        <div class="inner">
+          <section id="search" class="alt">
+            <form method="post" action="#">
+              <input type="text" name="query" id="query" placeholder="Search" />
+            </form>
+          </section>
+
+          <nav id="menu">
+            <header class="major">
+              <h2>Menu</h2>
+            </header>
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="blogs.html">Blogs</a></li>
+              <li><a href="projects.html">Projects</a></li>
+              <li><a href="resume.html">Resume</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </nav>
+
+          <section>
+            <header class="major">
+              <h2>Contact</h2>
+            </header>
+            <ul class="contact">
+              <li class="icon solid fa-envelope">
+                <a href="mailto:ujjwal2392003@gmail.com"
+                  >ujjwal2392003@gmail.com</a
+                >
+              </li>
+              <li class="icon solid fa-github">
+                <a
+                  href="https://github.com/UjJwAl092003"
+                  target="_blank"
+                  rel="noopener"
+                  >GitHub</a
+                >
+              </li>
+              <li class="icon solid fa-linkedin">
+                <a
+                  href="https://www.linkedin.com/in/ujjwal-singh-616908226/"
+                  target="_blank"
+                  rel="noopener"
+                  >LinkedIn</a
+                >
+              </li>
+            </ul>
+          </section>
+
+          <footer id="footer">
+            <p class="copyright">
+              © Ujjwal Singh. Building in Public. Learning Never Stops.
+            </p>
+          </footer>
+        </div>
+      </div>
+    </div>
+
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+
+    <script>
+      (function () {
+        const grid = document.getElementById("blogs-grid");
+        const searchEl = document.getElementById("blogs-search");
+        const categoryEl = document.getElementById("blogs-category");
+        const prevEl = document.getElementById("blogs-prev");
+        const nextEl = document.getElementById("blogs-next");
+        const pageInfoEl = document.getElementById("blogs-page-info");
+        const paginationEl = document.getElementById("blogs-pagination");
+
+        let items = [];
+
+        let filtered = [];
+        let page = 1;
+        const pageSize = 6;
+
+        function applyFilters() {
+          const q = (searchEl && searchEl.value ? searchEl.value : "")
+            .trim()
+            .toLowerCase();
+          const cat = categoryEl ? categoryEl.value : "all";
+
+          filtered = items.filter((b) => {
+            const matchesQuery =
+              !q ||
+              (b.title || "").toLowerCase().includes(q) ||
+              (b.description || "").toLowerCase().includes(q);
+
+            const matchesCat = cat === "all" || (b.category || "") === cat;
+            return matchesQuery && matchesCat;
+          });
+
+          page = 1;
+          render();
+          updatePagination();
+        }
+
+        function updatePagination() {
+          const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
+          page = Math.min(Math.max(1, page), totalPages);
+
+          if (paginationEl) {
+            paginationEl.style.display =
+              filtered.length > pageSize ? "block" : "none";
+          }
+
+          if (prevEl) prevEl.style.display = page > 1 ? "inline-block" : "none";
+          if (nextEl)
+            nextEl.style.display = page < totalPages ? "inline-block" : "none";
+
+          if (pageInfoEl)
+            pageInfoEl.textContent = `Page ${page} / ${totalPages}`;
+        }
+
+        function render() {
+          const start = (page - 1) * pageSize;
+          const end = start + pageSize;
+          const visible = filtered.slice(start, end);
+
+          grid.innerHTML = visible
+            .map((b) => {
+              const thumb = b.thumbnail || "images/blogs/thumb-ml.jpg";
+              const url = b.url || `blogs/${b.slug}.html`;
+
+              return `
+                      <article>
+                        <div class="content" style="padding-top: 0.25rem;">
+                          <h3 style="margin-bottom: 0.35rem;">${b.title}</h3>
+                          <p style="margin: 0 0 0.75rem 0; font-size: 0.95rem; color: inherit;">
+                            ${b.date ? `${b.date}` : ""}
+                            ${b.readingTime ? `${b.date ? " • " : ""}${b.readingTime}` : ""}
+                          </p>
+
+                          <p>${b.description || ""}</p>
+
+                          <ul class="actions">
+                            <li><a href="${url}" class="button">Read More</a></li>
+                          </ul>
+                        </div>
+                      </article>
+                    `;
+            })
+            .join("");
+        }
+
+        async function loadBlogs() {
+          try {
+            const res = await fetch("blogs/manifest.json");
+            items = await res.json();
+
+            // Enrich with computed fields for existing template
+            items = items
+              .map((b) => {
+                return {
+                  ...b,
+                  url: b.url || `blogs/${b.slug}.html`,
+                  description: b.description || b.excerpt || "",
+
+                  thumbnail:
+                    b.thumbnail ||
+                    b.featuredImage ||
+                    "images/blogs/thumb-ml.jpg",
+                };
+              })
+              .sort((a, b) => (b.date || "").localeCompare(a.date || ""));
+          } catch (e) {
+            grid.innerHTML =
+              "<article><h3>TODO: Add blogs/manifest.json entries</h3><p>Could not load blog data.</p></article>";
+            return;
+          }
+
+          // Only one (or zero) blog => hide pagination.
+          if (paginationEl) paginationEl.style.display = "none";
+
+          // Build categories dynamically from blogs/manifest.json
+          // (filter should auto-update whenever categories are added/changed in the manifest)
+          const cats = Array.from(
+            new Set(
+              items.map((b) => (b.category ? b.category : "")).filter(Boolean),
+            ),
+          ).sort();
+
+          if (categoryEl) {
+            categoryEl.innerHTML = "";
+            categoryEl.appendChild(new Option("All Categories", "all"));
+            cats.forEach((c) => {
+              categoryEl.appendChild(new Option(c, c));
+            });
+          }
+
+          filtered = items.slice();
+          page = 1;
+
+          if (paginationEl && items.length <= pageSize)
+            paginationEl.style.display = "none";
+
+          render();
+          updatePagination();
+        }
+
+        if (searchEl) {
+          searchEl.addEventListener("input", function () {
+            applyFilters();
+          });
+        }
+
+        if (categoryEl) {
+          categoryEl.addEventListener("change", function () {
+            applyFilters();
+          });
+        }
+
+        if (prevEl) {
+          prevEl.addEventListener("click", function (e) {
+            e.preventDefault();
+            page = Math.max(1, page - 1);
+            render();
+            updatePagination();
+          });
+        }
+
+        if (nextEl) {
+          nextEl.addEventListener("click", function (e) {
+            e.preventDefault();
+            page = page + 1;
+            const totalPages = Math.max(
+              1,
+              Math.ceil(filtered.length / pageSize),
+            );
+            page = Math.min(page, totalPages);
+            render();
+            updatePagination();
+          });
+        }
+
+        loadBlogs();
+      })();
+    </script>
+  </body>
+</html>

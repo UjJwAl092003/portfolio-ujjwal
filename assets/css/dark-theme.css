@@ -1,0 +1,585 @@
+/* ==========================================================================
+   DARK THEME OVERRIDE — Curious Bytes / ML Portfolio
+   Loaded AFTER main.css so these rules win the cascade naturally.
+   No HTML structure, sections, or nav markup is touched by this file —
+   it only restyles existing selectors already used in the template.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   0. FONT IMPORT
+   Modern grotesk in the OpenAI / Vercel / Linear family.
+   -------------------------------------------------------------------------- */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap");
+
+/* --------------------------------------------------------------------------
+   1. DESIGN TOKENS
+   Every color/radius/shadow used below pulls from here, so the whole
+   theme can be retuned by editing this one block.
+   -------------------------------------------------------------------------- */
+:root {
+  --bg-body: #0b0f19; /* deep black/navy page background */
+  --bg-elevated: #111827; /* header/footer/banner tint */
+  --bg-card: #161d2e; /* cards, boxes, sidebar alt panels */
+  --bg-card-hover: #1b2436; /* card hover state */
+  --border-subtle: rgba(148, 163, 184, 0.12);
+  --border-strong: rgba(148, 163, 184, 0.22);
+
+  --accent: #3b82f6; /* primary blue */
+  --accent-hover: #2563eb;
+  --accent-cyan: #06b6d4; /* secondary accent */
+  --accent-gradient: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #8b98ac;
+
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.35);
+  --shadow-card-hover: 0 12px 36px rgba(59, 130, 246, 0.18);
+  --shadow-button: 0 4px 14px rgba(59, 130, 246, 0.35);
+  --shadow-button-hover: 0 8px 22px rgba(59, 130, 246, 0.45);
+
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --------------------------------------------------------------------------
+   2. SMOOTH SCROLL + BASE
+   -------------------------------------------------------------------------- */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg-body) !important;
+}
+
+body,
+input,
+select,
+textarea {
+  color: var(--text-secondary) !important;
+  font-family:
+    "Inter",
+    "Plus Jakarta Sans",
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif !important;
+  line-height: 1.75 !important;
+  letter-spacing: 0.005em;
+}
+
+/* Gentle fade-in for the whole page once assets are ready */
+body.is-preload {
+  opacity: 1;
+}
+#wrapper {
+  animation: pageFadeIn 0.6s var(--ease);
+}
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   3. TYPOGRAPHY
+   -------------------------------------------------------------------------- */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--text-primary) !important;
+  font-family: "Plus Jakarta Sans", "Inter", sans-serif !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em;
+  line-height: 1.3 !important;
+}
+
+h1 {
+  font-weight: 800 !important;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+h2 {
+  position: relative;
+  padding-bottom: 0.35em;
+}
+h2:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 3.5em;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--accent-gradient);
+}
+
+strong,
+b {
+  color: var(--text-primary) !important;
+  font-weight: 700 !important;
+}
+
+p {
+  color: var(--text-secondary);
+  margin: 0 0 1.6em 0 !important;
+}
+
+a {
+  color: var(--accent-cyan) !important;
+  border-bottom-color: rgba(6, 182, 212, 0.35) !important;
+  transition:
+    color 0.2s var(--ease),
+    border-bottom-color 0.2s var(--ease) !important;
+}
+a:hover {
+  color: var(--accent) !important;
+  border-bottom-color: var(--accent) !important;
+}
+
+blockquote {
+  border-left-color: var(--accent) !important;
+  color: var(--text-muted);
+  background: var(--bg-card);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 1em 1.5em !important;
+}
+
+code {
+  background: rgba(59, 130, 246, 0.1) !important;
+  border-color: var(--border-subtle) !important;
+  color: var(--accent-cyan) !important;
+  border-radius: 6px !important;
+}
+
+hr {
+  border-bottom-color: var(--border-subtle) !important;
+}
+
+/* Original template drew its own orange underline beneath the last element
+   inside <header class="major"> (used for every section heading). Disable
+   it here so only our single gradient h2:after underline shows — otherwise
+   you get two stacked lines (orange from main.css + blue from this file). */
+header.major > :last-child {
+  border-bottom: none !important;
+  padding-bottom: 0 !important;
+}
+
+/* --------------------------------------------------------------------------
+   4. HEADER
+   -------------------------------------------------------------------------- */
+#header {
+  border-bottom: solid 1px var(--border-subtle) !important;
+}
+#header .logo {
+  color: var(--text-primary) !important;
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+  font-weight: 700 !important;
+}
+#header .logo strong {
+  color: var(--accent) !important;
+}
+
+/* Icon links (social icons in header + sidebar) */
+ul.icons li .icon,
+ul.contact li:before {
+  color: var(--text-muted) !important;
+}
+ul.icons li .icon:hover {
+  color: var(--accent-cyan) !important;
+  transform: translateY(-2px);
+  display: inline-block;
+  transition:
+    transform 0.2s var(--ease),
+    color 0.2s var(--ease);
+}
+.icon:before {
+  transition: color 0.2s var(--ease);
+}
+
+/* --------------------------------------------------------------------------
+   5. BANNER (hero section on index)
+   -------------------------------------------------------------------------- */
+#banner .image img,
+.image.main img,
+.image.fit img,
+.image img {
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--shadow-card);
+}
+
+/* --------------------------------------------------------------------------
+   6. FEATURE CARDS ("Erat lacinia" grid on index)
+   -------------------------------------------------------------------------- */
+.features article {
+  background: var(--bg-card);
+  border: solid 1px var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 2em;
+  transition:
+    transform 0.25s var(--ease),
+    box-shadow 0.25s var(--ease),
+    border-color 0.25s var(--ease);
+}
+.features article:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-card-hover);
+}
+.features article .icon {
+  height: auto;
+  line-height: 1;
+  width: auto;
+  margin: 0 0 1em 0 !important;
+}
+.features article .icon:before {
+  color: var(--accent) !important;
+}
+.features article .icon:after {
+  display: none; /* remove the dated rotated-diamond frame */
+}
+.features article h3 {
+  font-size: 1.15em;
+}
+
+/* --------------------------------------------------------------------------
+   7. POST CARDS ("Ipsum sed dolor" grid on index)
+   -------------------------------------------------------------------------- */
+.posts article {
+  background: var(--bg-card);
+  border: solid 1px var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.75em;
+  transition:
+    transform 0.25s var(--ease),
+    box-shadow 0.25s var(--ease),
+    border-color 0.25s var(--ease);
+}
+.posts article:before,
+.posts article:after {
+  display: none !important; /* drop the old CSS divider lines, cards now define their own edges */
+}
+.posts article:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-card-hover);
+}
+.posts article .image {
+  margin: -1.75em -1.75em 1.25em -1.75em !important;
+  width: calc(100% + 3.5em) !important;
+}
+.posts article .image img {
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0 !important;
+}
+.posts article h3 {
+  font-size: 1.2em;
+}
+
+/* --------------------------------------------------------------------------
+   8. BOX / TABLE-WRAPPER CONTENT BOXES (used on elements.html)
+   -------------------------------------------------------------------------- */
+.box {
+  background: var(--bg-card);
+  border: solid 1px var(--border-subtle) !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--shadow-card);
+}
+.box.alt {
+  background: transparent;
+  box-shadow: none;
+}
+
+/* --------------------------------------------------------------------------
+   9. BUTTONS
+   -------------------------------------------------------------------------- */
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+button,
+.button {
+  background-color: transparent;
+  border-radius: var(--radius-sm) !important;
+  box-shadow: inset 0 0 0 2px var(--accent) !important;
+  color: var(--accent) !important;
+  font-family: "Inter", sans-serif !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.02em !important;
+  text-transform: none !important;
+  transition:
+    background-color 0.2s var(--ease),
+    color 0.2s var(--ease),
+    box-shadow 0.25s var(--ease),
+    transform 0.2s var(--ease) !important;
+}
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+input[type="button"]:hover,
+button:hover,
+.button:hover {
+  background-color: rgba(59, 130, 246, 0.1) !important;
+  transform: translateY(-2px);
+}
+input[type="submit"]:active,
+input[type="reset"]:active,
+input[type="button"]:active,
+button:active,
+.button:active {
+  background-color: rgba(59, 130, 246, 0.18) !important;
+  transform: translateY(0);
+}
+
+/* Primary (filled, gradient) buttons */
+input[type="submit"].primary,
+input[type="reset"].primary,
+input[type="button"].primary,
+button.primary,
+.button.primary {
+  background: var(--accent-gradient) !important;
+  box-shadow: var(--shadow-button) !important;
+  color: #ffffff !important;
+}
+input[type="submit"].primary:hover,
+input[type="reset"].primary:hover,
+input[type="button"].primary:hover,
+button.primary:hover,
+.button.primary:hover {
+  box-shadow: var(--shadow-button-hover) !important;
+  transform: translateY(-3px);
+  filter: brightness(1.05);
+}
+input[type="submit"].primary:active,
+input[type="reset"].primary:active,
+input[type="button"].primary:active,
+button.primary:active,
+.button.primary:active {
+  transform: translateY(-1px);
+  filter: brightness(0.95);
+}
+
+.button.disabled,
+.button:disabled,
+input.disabled,
+input:disabled {
+  opacity: 0.35 !important;
+}
+
+/* Pagination pills reuse the button treatment */
+ul.pagination li > .page {
+  color: var(--text-muted);
+  border-radius: var(--radius-sm) !important;
+}
+ul.pagination li > .page.active {
+  background: var(--accent-gradient) !important;
+  color: #ffffff !important;
+}
+ul.pagination li > .page:hover {
+  background: var(--bg-card-hover);
+  color: var(--text-primary);
+}
+
+/* --------------------------------------------------------------------------
+   10. FORM FIELDS
+   -------------------------------------------------------------------------- */
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="tel"],
+input[type="search"],
+input[type="url"],
+select,
+textarea {
+  background: var(--bg-card) !important;
+  border: solid 1px var(--border-subtle) !important;
+  border-radius: var(--radius-sm) !important;
+  color: var(--text-primary) !important;
+  transition:
+    border-color 0.2s var(--ease),
+    box-shadow 0.2s var(--ease) !important;
+}
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+input[type="search"]:focus,
+input[type="url"]:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25) !important;
+}
+::placeholder {
+  color: var(--text-muted) !important;
+}
+
+/* --------------------------------------------------------------------------
+   11. MAIN CONTENT AREA SPACING
+   -------------------------------------------------------------------------- */
+#main > .inner > section {
+  border-top-color: var(--border-subtle) !important;
+}
+
+/* --------------------------------------------------------------------------
+   12. SIDEBAR
+   -------------------------------------------------------------------------- */
+#sidebar {
+  background-color: var(--bg-elevated) !important;
+  border-left: solid 1px var(--border-subtle);
+}
+#sidebar > .inner > * {
+  border-bottom-color: var(--border-subtle) !important;
+}
+#sidebar > .inner > .alt {
+  background-color: var(--bg-card) !important;
+  border-radius: var(--radius-md);
+}
+#sidebar h2 {
+  color: var(--text-primary) !important;
+}
+#sidebar .toggle:before {
+  color: var(--text-secondary) !important;
+}
+
+/* Search box */
+#search form:before {
+  color: var(--text-muted) !important;
+  opacity: 0.6;
+}
+
+/* Menu */
+#menu ul {
+  color: var(--text-secondary) !important;
+  font-family: "Inter", sans-serif !important;
+  letter-spacing: 0.02em !important;
+}
+#menu ul a,
+#menu ul span {
+  color: var(--text-secondary) !important;
+  border-radius: 8px;
+  padding-left: 0.5em !important;
+  transition:
+    color 0.2s var(--ease),
+    background-color 0.2s var(--ease) !important;
+}
+#menu ul a:hover,
+#menu ul span:hover {
+  color: var(--text-primary) !important;
+  background-color: rgba(59, 130, 246, 0.08);
+}
+#menu ul a.opener:before,
+#menu ul span.opener:before {
+  color: var(--text-muted) !important;
+}
+#menu ul a.opener:hover:before,
+#menu ul span.opener:hover:before {
+  color: var(--accent-cyan) !important;
+}
+#menu > ul > li {
+  border-top-color: var(--border-subtle) !important;
+}
+
+/* Mini posts (sidebar "Ante interdum") */
+.mini-posts article {
+  border-top-color: var(--border-subtle) !important;
+}
+.mini-posts article .image img {
+  border-radius: var(--radius-md) !important;
+  transition: transform 0.3s var(--ease);
+}
+.mini-posts article:hover .image img {
+  transform: scale(1.03);
+}
+
+/* Contact list */
+ul.contact li {
+  border-top-color: var(--border-subtle) !important;
+}
+ul.contact li a {
+  color: var(--text-secondary) !important;
+}
+ul.contact li a:hover {
+  color: var(--accent-cyan) !important;
+}
+
+/* --------------------------------------------------------------------------
+   13. FOOTER
+   -------------------------------------------------------------------------- */
+#footer .copyright {
+  color: var(--text-muted) !important;
+}
+#footer .copyright a {
+  color: var(--text-secondary) !important;
+}
+#footer .copyright a:hover {
+  color: var(--accent-cyan) !important;
+}
+
+/* --------------------------------------------------------------------------
+   14. TABLES
+   -------------------------------------------------------------------------- */
+table {
+  color: var(--text-secondary);
+}
+table tbody tr {
+  border-color: var(--border-subtle) !important;
+}
+table thead {
+  background: var(--bg-card) !important;
+  color: var(--text-primary) !important;
+}
+table tfoot {
+  background: var(--bg-card) !important;
+}
+
+/* --------------------------------------------------------------------------
+   15. SCROLLBAR (subtle, matches theme — cosmetic only, WebKit + Firefox)
+   -------------------------------------------------------------------------- */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-body);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--bg-card-hover);
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+html {
+  scrollbar-color: var(--bg-card-hover) var(--bg-body);
+  scrollbar-width: thin;
+}
+
+/* --------------------------------------------------------------------------
+   16. IMAGE POLISH (left/right inline images used in elements.html)
+   -------------------------------------------------------------------------- */
+.image.left img,
+.image.right img {
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--shadow-card);
+}
+
+/* --------------------------------------------------------------------------
+   17. SELECTION COLOR (small premium touch)
+   -------------------------------------------------------------------------- */
+::selection {
+  background: rgba(59, 130, 246, 0.35);
+  color: var(--text-primary);
+}

@@ -1,0 +1,62 @@
+[
+  {
+    "slug": "naive-bayes-explained",
+    "title": "Naive Bayes Explained: From Avocados to Spam Filters",
+    "description": "Understand Naive Bayes intuitively using avocados and spam filtering.",
+    "date": "2026-07-05",
+    "category": "Machine Learning Algorithms",
+    "readingTime": "8 min read",
+    "tags": ["Machine Learning", "Naive Bayes", "Classification"],
+    "featuredImage": "/images/blogs/naive-bayes.png",
+    "author": "Ujjwal Singh",
+    "markdownFile": "blogs/naive-bayes-explained.md"
+  },
+  {
+    "slug": "matplotlib-for-machine-learning-a-complete-beginners-guide",
+    "title": "Matplotlib for Machine Learning: A Complete Beginner's Guide",
+    "description": "If you are starting your machine learning journey, you will hear one thing again and again: data alone does not tell a story. You have to see it to understand it. That is exactly why Matplotlib exists.",
+    "date": "2026-07-06",
+    "category": "Python for Machine Learning",
+    "readingTime": "12 min read",
+    "tags": ["Machine Learning", "Matplotlib", "Data Visualization", "Python"],
+    "featuredImage": "/images/blogs/matplotlib.png",
+    "author": "Ujjwal Singh",
+    "markdownFile": "blogs/matplotlib.md"
+  },
+  {
+    "slug": "linear-algebra-for-ml-part-1",
+    "title": "Linear Algebra for Machine Learning, Part 1: Vectors, Norms and the Foundations of Matrix Calculus",
+    "description": "This is the first part in a linear algebra series covering vectors, norms, and the foundations of matrix calculus for ML.",
+    "date": "2026-07-07",
+    "category": "Python for Machine Learning",
+    "readingTime": "10 min read",
+    "tags": [
+      "Machine Learning",
+      "Linear Algebra",
+      "Vectors",
+      "Norms",
+      "Matrix Calculus"
+    ],
+    "featuredImage": "",
+    "author": "Ujjwal Singh",
+    "markdownFile": "blogs/linear-algebra-for-ml-part-1.md"
+  },
+  {
+    "slug": "numpy-for-machine-learning",
+    "title": "NumPy for Machine Learning: A Complete Beginner's Guide",
+    "description": "Before you can do anything in machine learning, whether that is loading a dataset, running matrix calculus, or feeding numbers into a model, you need a way to store and manipulate large collections of numbers efficiently.",
+    "date": "2026-07-08",
+    "category": "Python for Machine Learning",
+    "readingTime": "15 min read",
+    "tags": [
+      "Machine Learning",
+      "NumPy",
+      "Python",
+      "Arrays",
+      "Data Processing"
+    ],
+    "featuredImage": "/images/blogs/numpy.png",
+    "author": "Ujjwal Singh",
+    "markdownFile": "blogs/numpy-for-machine-learning.md"
+  }
+]

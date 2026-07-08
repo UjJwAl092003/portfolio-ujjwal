@@ -1,0 +1,20 @@
+[
+  {
+    "id": "fittrack",
+    "title": "FitTrack Web Application",
+    "description": "Built a full-stack fitness tracking app using the MERN stack to help users monitor workouts and achieve health goals. Optimized MongoDB for workout history storage and used Redux for consistent state management. Implemented secure authentication with JWT.",
+    "technologies": ["ReactJS", "Node.js", "Express.js", "MongoDB", "Redux"],
+    "github": "#",
+    "liveDemo": "#",
+    "image": "images/projects/fittrack-thumb.jpg"
+  },
+  {
+    "id": "github-finder",
+    "title": "GitHub Finder",
+    "description": "Created a React-based tool to search GitHub users and display profile data (name, location, repositories, and social links) using the GitHub API. Implemented search, filter, and sort features and optimized API integration for faster load time.",
+    "technologies": ["ReactJS", "GitHub API"],
+    "github": "#",
+    "liveDemo": "#",
+    "image": "images/projects/github-finder-thumb.jpg"
+  }
+]

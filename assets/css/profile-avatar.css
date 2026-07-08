@@ -1,0 +1,48 @@
+/* Profile avatar: dedicated hero avatar, NOT using HTML5UP .image wrapper */
+.profile-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 auto;
+  width: 300px;
+  height: 380px;
+
+  overflow: hidden;
+
+  border-radius: 10px;
+
+  /* Soft shadow */
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45);
+
+  /* Thin blue border */
+  border: 1px solid rgba(59, 130, 246, 0.28);
+
+  /* Blue glow behind the image */
+  position: relative;
+}
+
+.profile-avatar::after {
+  content: "";
+  position: absolute;
+  inset: -10px;
+  border-radius: 12px;
+  box-shadow: 0 0 18px rgba(59, 130, 246, 0.22);
+
+  pointer-events: none;
+}
+
+.profile-avatar > img {
+  display: block;
+  flex: 0 0 auto;
+  width: 300px;
+  height: 380px;
+
+  border-radius: 10px;
+  object-fit: contain;
+
+  object-position: center;
+
+  /* Ensure it does not stretch */
+  overflow: hidden;
+}
