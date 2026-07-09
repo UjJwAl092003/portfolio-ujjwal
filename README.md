@@ -65,7 +65,7 @@ Today, I focus on learning the theory behind intelligent systems, building proje
 
 ---
 
-## Current Learning Roadmap
+## Machine Learning Roadmap
 
 - Linear Algebra
 - Probability & Statistics
