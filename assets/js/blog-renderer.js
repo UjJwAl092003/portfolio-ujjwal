@@ -281,16 +281,18 @@
       ? item.markdownFile.replace(/^blogs\//, "")
       : `./${slug}.md`;
 
-    const mdUrl = markdownBasePath
-      ? `${markdownBasePath}${markdownFile}`
-      : markdownFile;
+    // Ensure markdown is always fetched from the /blogs/ directory.
+    // GitHub Pages is case-sensitive and your site is served under a subpath, so:
+    // - markdownBasePath may be "../" (from /blogs/<slug>.html)
+    // - markdownFile is a bare filename like "linear-algebra-for-ml-part-1.md"
+    // The correct final path is always: <base> + "blogs/" + <filename>.
+    const mdUrl = `${markdownBasePath || ""}blogs/${markdownFile}`;
 
-    // If we were given an HTML page under /blogs/, `markdownBasePath` is typically `../`
-    // Ensure the markdown URL correctly points into the `blogs/` folder.
-    // (Example: blogs/naive-bayes-explained.html -> ../blogs/<slug>.md)
-    const fallbackMdUrl = `${markdownBasePath || ""}blogs/${slug}.md`;
+    // Back-compat fallback (in case markdownBasePath is already "" and markdownFile already includes blogs/).
+    const fallbackMdUrl = `${markdownBasePath || ""}${item.markdownFile || `blogs/${slug}.md`}`;
 
     const mdRaw = await loadText(mdUrl).catch(() => loadText(fallbackMdUrl));
+
     const parsed = parseFrontMatter(mdRaw);
 
     const fm = {
