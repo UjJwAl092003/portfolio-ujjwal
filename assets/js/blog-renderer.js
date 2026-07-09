@@ -366,23 +366,27 @@
 
   window.BlogRenderer = { renderBySlug };
 
-  function initAiSummaryIfPresent() {
+  // Initialize AI summary exactly once per page load.
+  let aiSummaryInitialized = false;
+  function initAiSummaryIfPresentOnce() {
+    if (aiSummaryInitialized) return;
     try {
       if (
         window.BlogSummary &&
         typeof window.BlogSummary.initBlogSummarizer === "function"
       ) {
+        aiSummaryInitialized = true;
         window.BlogSummary.initBlogSummarizer();
       }
     } catch (_) {
-      // no-op
+      // If initialization threw, allow a retry on a subsequent call.
     }
   }
 
   const _renderBySlug = renderBySlug;
   async function renderBySlugWrapped(args) {
     await _renderBySlug(args);
-    initAiSummaryIfPresent();
+    initAiSummaryIfPresentOnce();
   }
 
   window.BlogRenderer = { renderBySlug: renderBySlugWrapped };
