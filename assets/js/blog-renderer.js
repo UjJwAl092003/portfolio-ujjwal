@@ -286,10 +286,16 @@
     // - markdownBasePath may be "../" (from /blogs/<slug>.html)
     // - markdownFile is a bare filename like "linear-algebra-for-ml-part-1.md"
     // The correct final path is always: <base> + "blogs/" + <filename>.
+    // Always load markdown from the /blogs/ folder.
+    // Construct explicitly to avoid any accidental omission of the `blogs/` path segment.
     const mdUrl = `${markdownBasePath || ""}blogs/${markdownFile}`;
 
-    // Back-compat fallback (in case markdownBasePath is already "" and markdownFile already includes blogs/).
-    const fallbackMdUrl = `${markdownBasePath || ""}${item.markdownFile || `blogs/${slug}.md`}`;
+    // Back-compat fallback (kept, but primary path must always be /blogs/).
+    const fallbackMdUrl = `${markdownBasePath || ""}blogs/${markdownFile}`;
+
+    console.log("markdownBasePath =", markdownBasePath);
+    console.log("markdownFile =", markdownFile);
+    console.log("mdUrl =", mdUrl);
 
     const mdRaw = await loadText(mdUrl).catch(() => loadText(fallbackMdUrl));
 
