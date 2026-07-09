@@ -28,7 +28,7 @@
     "title": "Linear Algebra for Machine Learning, Part 1: Vectors, Norms and the Foundations of Matrix Calculus",
     "description": "This is the first part in a linear algebra series covering vectors, norms, and the foundations of matrix calculus for ML.",
     "date": "2026-07-07",
-    "category": "Python for Machine Learning",
+    "category": "Mathematics",
     "readingTime": "10 min read",
     "tags": [
       "Machine Learning",
@@ -70,5 +70,17 @@
     "featuredImage": "",
     "author": "Ujjwal Singh",
     "markdownFile": "blogs/python-recall.md"
+  },
+  {
+    "slug": "central-limit-theorem",
+    "title": "Understanding the Central Limit Theorem: From Coin Flips to One of the Most Beautiful Results in Statistics",
+    "description": "The Central Limit Theorem (CLT) explained intuitively—starting from Bernoulli and Binomial distributions, building intuition for sampling distributions, and showing why sample means approach a Normal distribution.",
+    "date": "2026-07-09",
+    "category": "Mathematics",
+    "readingTime": "15 min read",
+    "tags": ["Statistics", "Probability", "Central Limit Theorem"],
+    "featuredImage": "/images/blogs/central-limit-theorem/central-limit-theorem.png",
+    "author": "Ujjwal Singh",
+    "markdownFile": "blogs/central-limit-theorem.md"
   }
 ]

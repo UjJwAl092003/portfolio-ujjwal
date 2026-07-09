@@ -149,6 +149,31 @@
   background: rgba(59, 130, 246, 0.08);
 }
 
+/* Blog images: prevent horizontal overflow; keep aspect ratio; center + spacing */
+.blog-content-wrap {
+  overflow-x: hidden;
+}
+
+.blog-content-wrap img {
+  display: block;
+  max-width: 100%;
+  width: auto;
+  height: auto;
+  margin: 2rem auto;
+  border-radius: 12px;
+}
+
+/* Captions in markdown are typically rendered as <em> right after the image */
+.blog-content-wrap img + em,
+.blog-content-wrap figure + em {
+  display: block;
+  text-align: center;
+  font-style: italic;
+  opacity: 0.9;
+  margin-top: -1.15rem;
+  margin-bottom: 2rem;
+}
+
 .blog-content-wrap pre {
   margin: 1.25rem 0;
 }
