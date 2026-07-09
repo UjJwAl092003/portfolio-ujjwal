@@ -93,9 +93,10 @@
     const container = document.createElement("div");
     container.innerHTML = html;
 
-    const headings = container.querySelectorAll("h2, h3");
-    const tocItems = [];
+    // Build a nested TOC for h2/h3/h4.
+    const headings = container.querySelectorAll("h2, h3, h4");
 
+    const tocItems = [];
     headings.forEach((h) => {
       const level = h.tagName.toLowerCase();
       const text = h.textContent.trim();
@@ -134,18 +135,109 @@
       } else {
         const list = tocItems
           .map((t) => {
-            const indent = t.level === "h3" ? "toc-indent" : "";
-            return `<li class="${indent}"><a href="#${t.id}">${escapeHtml(
+            const indentClass =
+              t.level === "h3"
+                ? "toc-indent"
+                : t.level === "h4"
+                  ? "toc-indent toc-indent-level-3"
+                  : "";
+            return `<li class="${indentClass}"><a href="#${t.id}" data-toc-target="${t.id}">${escapeHtml(
               t.text,
             )}</a></li>`;
           })
           .join("");
 
+        // NOTE: We keep the existing TOC markup style, just wrapping it
+        // in a <details> for mobile collapsibility.
         tocRoot.innerHTML =
           `<nav class="blog-toc">` +
           `<header class="blog-toc-header">Table of Contents</header>` +
-          `<ul>${list}</ul>` +
+          `<details open><summary aria-label="Toggle table of contents">Sections</summary><ul data-blog-toc-list>${list}</ul></details>` +
           `</nav>`;
+
+        setupTocBehavior(tocRoot);
+      }
+    }
+
+    function setupTocBehavior(tocRootEl) {
+      try {
+        const tocLinks = Array.from(
+          tocRootEl.querySelectorAll("a[data-toc-target]"),
+        );
+        const headings = tocLinks
+          .map((a) =>
+            document.getElementById(a.getAttribute("data-toc-target")),
+          )
+          .filter(Boolean);
+
+        if (!headings.length) return;
+
+        // Smooth scroll with sticky header offset.
+        // The blog header height differs by layout, so we use a conservative offset.
+        const headerOffset = 96;
+
+        tocLinks.forEach((a) => {
+          a.addEventListener("click", (ev) => {
+            const id = a.getAttribute("data-toc-target");
+            if (!id) return;
+            const target = document.getElementById(id);
+            if (!target) return;
+
+            ev.preventDefault();
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
+
+            // Additional offset adjustment
+            window.setTimeout(() => {
+              window.scrollBy({ top: -headerOffset });
+            }, 50);
+          });
+        });
+
+        // Active section highlighting using IntersectionObserver
+        const activeSet = new Set();
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              const id = entry.target && entry.target.id;
+              if (!id) return;
+
+              if (entry.isIntersecting) {
+                activeSet.add(id);
+              } else {
+                activeSet.delete(id);
+              }
+            });
+
+            // pick the closest intersecting heading to the top
+            let best = null;
+            let bestTop = Infinity;
+            headings.forEach((h) => {
+              if (!activeSet.has(h.id)) return;
+              const rect = h.getBoundingClientRect();
+              const top = Math.abs(rect.top - headerOffset);
+              if (top < bestTop) {
+                bestTop = top;
+                best = h.id;
+              }
+            });
+
+            tocLinks.forEach((link) => {
+              const id = link.getAttribute("data-toc-target");
+              link.classList.toggle("is-active", best === id);
+            });
+          },
+          {
+            root: null,
+            // trigger when headings are near the top
+            rootMargin: `-${headerOffset + 10}px 0px -70% 0px`,
+            threshold: [0, 0.1, 0.25],
+          },
+        );
+
+        headings.forEach((h) => observer.observe(h));
+      } catch (_) {
+        // fail silently; TOC still works as basic anchor links
       }
     }
 
@@ -273,4 +365,25 @@
   }
 
   window.BlogRenderer = { renderBySlug };
+
+  function initAiSummaryIfPresent() {
+    try {
+      if (
+        window.BlogSummary &&
+        typeof window.BlogSummary.initBlogSummarizer === "function"
+      ) {
+        window.BlogSummary.initBlogSummarizer();
+      }
+    } catch (_) {
+      // no-op
+    }
+  }
+
+  const _renderBySlug = renderBySlug;
+  async function renderBySlugWrapped(args) {
+    await _renderBySlug(args);
+    initAiSummaryIfPresent();
+  }
+
+  window.BlogRenderer = { renderBySlug: renderBySlugWrapped };
 })();

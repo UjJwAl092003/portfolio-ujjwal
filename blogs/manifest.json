@@ -58,5 +58,17 @@
     "featuredImage": "/images/blogs/numpy.png",
     "author": "Ujjwal Singh",
     "markdownFile": "blogs/numpy-for-machine-learning.md"
+  },
+  {
+    "slug": "python-recall",
+    "title": "Python Recall: The Concepts You Always Forget",
+    "description": "This is not a complete Python course. It deliberately skips the basics you already know and skips OOP entirely, since that deserves its own separate note.",
+    "date": "2026-07-09",
+    "category": "Python for Machine Learning",
+    "readingTime": "8 min read",
+    "tags": ["Python", "Programming Concepts", "Recall"],
+    "featuredImage": "",
+    "author": "Ujjwal Singh",
+    "markdownFile": "blogs/python-recall.md"
   }
 ]
