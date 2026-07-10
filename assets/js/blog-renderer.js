@@ -160,6 +160,13 @@
     }
 
     function setupTocBehavior(tocRootEl) {
+      if (
+        window.__debugInstrumentation &&
+        window.__debugInstrumentation.initLog
+      ) {
+        window.__debugInstrumentation.initLog("TOC", "toc");
+      }
+
       try {
         const tocLinks = Array.from(
           tocRootEl.querySelectorAll("a[data-toc-target]"),
@@ -262,6 +269,9 @@
   }
 
   async function renderBySlug({ slug, manifestUrl, markdownBasePath }) {
+    if (window.__debugInstrumentation && window.__debugInstrumentation.initLog)
+      window.__debugInstrumentation.initLog("blog-renderer", "blog-renderer");
+
     const manifest = await loadManifest(manifestUrl);
 
     const item = manifest.find((x) => x.slug === slug);

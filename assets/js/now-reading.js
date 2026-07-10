@@ -18,6 +18,8 @@
   }
 
   async function init() {
+    if (window.__debugInstrumentation && window.__debugInstrumentation.initLog)
+      window.__debugInstrumentation.initLog("now-reading", "now-reading");
     const root = document.getElementById("now-reading");
     if (!root) return;
 

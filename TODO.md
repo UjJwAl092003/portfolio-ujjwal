@@ -1,7 +1,8 @@
-TODO
+# TODO
 
-- [x] Fix blogs manifest dates for naive-bayes-explained and numpy-for-machine-learning.
-- [x] Ensure blog cards and blog detail pages render dates from blogs/manifest.json (no hardcoded dates).
-- [x] Update homepage profile image to mypic.jpg.
-- [x] Improve hero profile image presentation (rounded rectangle, aspect handling, blend).
-- [ ] Integrate new blog python-recall.md into blogs/manifest.json and ensure it loads via existing renderer.
+## Blog debug instrumentation
+
+- [ ] Add debug logging for initialization/event entry points and fetch/navigation.
+- [ ] Ensure logging is added only (no functionality change).
+- [ ] Update project files accordingly.
+- [ ] Verify no syntax errors by running a quick lint/build if available (or run a minimal node check).
