@@ -1,8 +1,12 @@
 # TODO
 
-## Blog debug instrumentation
+## Blog integration: linear-regression-explained
 
-- [ ] Add debug logging for initialization/event entry points and fetch/navigation.
-- [ ] Ensure logging is added only (no functionality change).
-- [ ] Update project files accordingly.
-- [ ] Verify no syntax errors by running a quick lint/build if available (or run a minimal node check).
+- [x] Create `blogs/linear-regression-explained.md`
+- [x] Add `blogs/linear-regression-explained.html` page
+- [x] Update `blogs/manifest.json` with the new post entry
+- [x] Add/verify any required images under `assets/images/blogs/linear-regression/` (if referenced)
+- [ ] Final verification: blogs.html listing, filtering, search, rendering, TOC, AI summary, reading progress, responsive/no horizontal scroll
+
+
+

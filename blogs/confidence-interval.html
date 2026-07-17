@@ -1,0 +1,142 @@
+<!doctype html>
+<!-- Portfolio Blogs Wrapper -->
+<html>
+  <head>
+    <title>
+      Confidence Interval: From Coin Flips to One of the Most Beautiful Results
+      in Statistics | Ujjwal Singh
+    </title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=no"
+    />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/dark-theme.css" />
+    <link rel="stylesheet" href="../assets/css/blog.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github-dark.min.css"
+    />
+  </head>
+  <body class="is-preload">
+    <div id="wrapper">
+      <div id="main">
+        <div class="inner">
+          <header id="header">
+            <a href="../index.html" class="logo"
+              ><strong>Ujjwal Singh</strong> • Machine Learning</a
+            >
+            <ul class="icons">
+              <li>
+                <a
+                  href="https://github.com/UjJwAl092003"
+                  target="_blank"
+                  rel="noopener"
+                  class="icon brands fa-github"
+                  ><span class="label">GitHub</span></a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://www.linkedin.com/in/ujjwal-singh-616908226/"
+                  target="_blank"
+                  rel="noopener"
+                  class="icon brands fa-linkedin"
+                  ><span class="label">LinkedIn</span></a
+                >
+              </li>
+              <li>
+                <a
+                  href="mailto:ujjwal2392003@gmail.com"
+                  class="icon solid fa-envelope"
+                  ><span class="label">Email</span></a
+                >
+              </li>
+            </ul>
+          </header>
+
+          <section>
+            <div id="blog-root" data-slug="confidence-interval"></div>
+          </section>
+        </div>
+      </div>
+
+      <div id="sidebar">
+        <div class="inner">
+          <section id="search" class="alt">
+            <form method="post" action="#">
+              <input type="text" name="query" id="query" placeholder="Search" />
+            </form>
+          </section>
+
+          <nav id="menu">
+            <header class="major">
+              <h2>Menu</h2>
+            </header>
+            <ul>
+              <li><a href="../index.html">Home</a></li>
+              <li><a href="../blogs.html">Blogs</a></li>
+              <li><a href="../projects.html">Projects</a></li>
+              <li><a href="../resume.html">Resume</a></li>
+              <li><a href="../contact.html">Contact</a></li>
+            </ul>
+          </nav>
+
+          <footer id="footer">
+            <p class="copyright">
+              © Ujjwal Singh. Building in Public. Learning Never Stops.
+            </p>
+          </footer>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.0/dist/purify.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/core.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/languages/javascript.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/languages/python.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/languages/typescript.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/languages/markup.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/languages/json.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/languages/bash.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/languages/dockerfile.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/languages/cpp.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/languages/csharp.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/languages/java.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/languages/go.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/languages/rust.min.js"></script>
+
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="../assets/js/browser.min.js"></script>
+    <script src="../assets/js/breakpoints.min.js"></script>
+    <script src="../assets/js/util.js"></script>
+    <script src="../assets/js/main.js"></script>
+
+    <script src="../assets/js/blog-renderer.js"></script>
+
+    <!-- Blog AI Summary (local extractive) -->
+    <script
+      type="module"
+      src="../assets/js/blog-summary/public-api.js"
+    ></script>
+    <script type="module" src="../assets/js/blog-summary/init.js"></script>
+
+    <script>
+      (function () {
+        var root = document.getElementById("blog-root");
+        if (!root) return;
+        var slug = root.getAttribute("data-slug");
+        if (!slug) return;
+        window.BlogRenderer.renderBySlug({
+          slug: slug,
+          manifestUrl: "../blogs/manifest.json",
+          markdownBasePath: "../",
+        });
+      })();
+    </script>
+  </body>
+</html>
