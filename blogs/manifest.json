@@ -137,6 +137,25 @@
     "featuredImage": "/images/blogs/gradient-descent/bowl_descent.png",
     "author": "Ujjwal Singh",
     "markdownFile": "blogs/gradient-descent-explained.md"
+  },
+  {
+    "slug": "polynomial-regression-explained",
+    "title": "Polynomial Regression: Fitting Curves With a Straight Line Model",
+    "description": "Learn Polynomial Regression intuitively: how to expand features with PolynomialFeatures, why cross-terms like ab matter, and how to detect underfitting vs overfitting using learning curves.",
+    "date": "2026-07-18",
+    "category": "Machine Learning Algorithms",
+    "readingTime": "10 min read",
+    "tags": [
+      "Machine Learning",
+      "Polynomial Regression",
+      "Regression",
+      "Overfitting",
+      "Underfitting",
+      "Learning Curves"
+    ],
+    "featuredImage": "/images/blogs/polynomial-regression/poly_raw_data_scatter.png",
+    "author": "Ujjwal Singh",
+    "markdownFile": "blogs/polynomial-regression-explained.md"
   }
 ]
 
