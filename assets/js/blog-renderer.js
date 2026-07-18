@@ -203,35 +203,54 @@
         // Active section highlighting using IntersectionObserver
         const activeSet = new Set();
 
+        let lastActiveId = null;
+
         const observer = new IntersectionObserver(
           (entries) => {
+            // Maintain a set of currently-intersecting headings, but do not
+            // do expensive layout reads (getBoundingClientRect) for all headings.
             entries.forEach((entry) => {
               const id = entry.target && entry.target.id;
               if (!id) return;
 
-              if (entry.isIntersecting) {
-                activeSet.add(id);
-              } else {
-                activeSet.delete(id);
-              }
+              if (entry.isIntersecting) activeSet.add(id);
+              else activeSet.delete(id);
             });
 
-            // pick the closest intersecting heading to the top
-            let best = null;
-            let bestTop = Infinity;
-            headings.forEach((h) => {
-              if (!activeSet.has(h.id)) return;
-              const rect = h.getBoundingClientRect();
-              const top = Math.abs(rect.top - headerOffset);
-              if (top < bestTop) {
-                bestTop = top;
-                best = h.id;
-              }
-            });
+            // Pick the closest intersecting heading to the header offset.
+            // Use the data provided by the observer entries only.
+            let bestId = null;
+            let bestTopDelta = Infinity;
 
+            for (const entry of entries) {
+              const id = entry.target && entry.target.id;
+              if (!id) continue;
+              if (!activeSet.has(id)) continue;
+              if (!entry.isIntersecting) continue;
+
+              const rectTop = entry.boundingClientRect
+                ? entry.boundingClientRect.top
+                : 0;
+              const delta = Math.abs(rectTop - headerOffset);
+
+              if (delta < bestTopDelta) {
+                bestTopDelta = delta;
+                bestId = id;
+              }
+            }
+
+            // Fallback: if entries didn't include an intersecting one for some
+            // reason, keep lastActiveId.
+            if (!bestId) bestId = lastActiveId;
+            if (!bestId) return;
+
+            if (bestId === lastActiveId) return;
+            lastActiveId = bestId;
+
+            // Only update DOM when active section changes.
             tocLinks.forEach((link) => {
               const id = link.getAttribute("data-toc-target");
-              link.classList.toggle("is-active", best === id);
+              link.classList.toggle("is-active", bestId === id);
             });
           },
           {
@@ -241,6 +260,7 @@
             threshold: [0, 0.1, 0.25],
           },
         );
+
 
         headings.forEach((h) => observer.observe(h));
       } catch (_) {
