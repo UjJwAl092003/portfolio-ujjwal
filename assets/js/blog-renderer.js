@@ -3,9 +3,11 @@
   - Loads blogs/manifest.json
   - Finds markdown file by slug
   - Parses YAML front matter
-  - Renders Markdown via marked.js (GFM)
-  - Generates TOC from h2/h3
+  - Sanitizes and renders Markdown via marked.js + DOMPurify
+  - Normalizes relative image paths
+  - Generates interactive TOC
   - Syntax highlights via highlight.js
+  - Supports KaTeX math formulas if present
 */
 
 (function () {
@@ -14,7 +16,7 @@
       .replace(/&/g, "&amp;")
       .replace(/</g, "<")
       .replace(/>/g, ">")
-      .replace(/\\"/g, '"')
+      .replace(/"/g, "&quot;")
       .replace(/'/g, "&#039;");
   }
 
@@ -38,7 +40,6 @@
 
     const lines = yaml.split(/\r?\n/);
     const fm = {};
-
     let currentArrayKey = null;
 
     for (let raw of lines) {
@@ -46,7 +47,6 @@
       const t = line.trim();
       if (!t) continue;
 
-      // key:   (start array)
       const arrayKeyMatch = t.match(/^([A-Za-z0-9_\-]+):\s*$/);
       if (arrayKeyMatch) {
         const key = arrayKeyMatch[1];
@@ -55,21 +55,18 @@
         continue;
       }
 
-      // array item: - value
       if (t.startsWith("- ") && currentArrayKey) {
         const item = t.slice(2).trim();
         fm[currentArrayKey].push(stripQuotes(item));
         continue;
       }
 
-      // key: value (inline)
       const keyVal = t.match(/^([A-Za-z0-9_\-]+):\s*(.*)$/);
       if (!keyVal) continue;
 
       const key = keyVal[1];
       let val = keyVal[2] || "";
 
-      // Inline array: [a,b]
       if (val.startsWith("[") && val.endsWith("]")) {
         const arr = val
           .replace(/^\[/, "")
@@ -89,13 +86,34 @@
     return { frontMatter: fm, body };
   }
 
+  function normalizeImagePaths(container, slug) {
+    if (!container) return;
+    const images = container.querySelectorAll("img");
+    images.forEach((img) => {
+      let src = img.getAttribute("src") || "";
+      if (!src) return;
+
+      img.setAttribute("loading", "lazy");
+
+      // Normalize root-relative or mistaken paths for /blogs/ pages
+      if (src.startsWith("/assets/")) {
+        src = ".." + src;
+      } else if (src.startsWith("/images/")) {
+        src = "../assets" + src;
+      } else if (src.startsWith("assets/")) {
+        src = "../" + src;
+      } else if (src.startsWith("images/")) {
+        src = "../assets/images/blogs/" + (slug ? slug + "/" : "") + src.replace(/^images\//, "");
+      }
+      img.setAttribute("src", src);
+    });
+  }
+
   function extractToc(html) {
     const container = document.createElement("div");
     container.innerHTML = html;
 
-    // Build a nested TOC for h2/h3/h4.
     const headings = container.querySelectorAll("h2, h3, h4");
-
     const tocItems = [];
     headings.forEach((h) => {
       const level = h.tagName.toLowerCase();
@@ -118,15 +136,26 @@
     return { tocItems, container };
   }
 
-  function renderMd(md, { tocMountId, contentMountId }) {
+  function renderMd(md, { tocMountId, contentMountId, slug }) {
+    if (typeof marked === "undefined") return;
+
     marked.setOptions({
       gfm: true,
       breaks: false,
       headerIds: false,
     });
 
-    const rawHtml = marked.parse(md);
+    let rawHtml = marked.parse(md);
+
+    if (window.DOMPurify) {
+      rawHtml = window.DOMPurify.sanitize(rawHtml, {
+        ADD_TAGS: ["img", "iframe", "span", "div"],
+        ADD_ATTR: ["target", "loading", "src", "alt", "style", "class", "id", "data-toc-target"],
+      });
+    }
+
     const { tocItems, container } = extractToc(rawHtml);
+    normalizeImagePaths(container, slug);
 
     const tocRoot = document.getElementById(tocMountId);
     if (tocRoot) {
@@ -147,8 +176,6 @@
           })
           .join("");
 
-        // NOTE: We keep the existing TOC markup style, just wrapping it
-        // in a <details> for mobile collapsibility.
         tocRoot.innerHTML =
           `<nav class="blog-toc">` +
           `<header class="blog-toc-header">Table of Contents</header>` +
@@ -159,175 +186,160 @@
       }
     }
 
-    function setupTocBehavior(tocRootEl) {
-      if (
-        window.__debugInstrumentation &&
-        window.__debugInstrumentation.initLog
-      ) {
-        window.__debugInstrumentation.initLog("TOC", "toc");
-      }
-
-      try {
-        const tocLinks = Array.from(
-          tocRootEl.querySelectorAll("a[data-toc-target]"),
-        );
-        const headings = tocLinks
-          .map((a) =>
-            document.getElementById(a.getAttribute("data-toc-target")),
-          )
-          .filter(Boolean);
-
-        if (!headings.length) return;
-
-        // Smooth scroll with sticky header offset.
-        // The blog header height differs by layout, so we use a conservative offset.
-        const headerOffset = 96;
-
-        tocLinks.forEach((a) => {
-          a.addEventListener("click", (ev) => {
-            const id = a.getAttribute("data-toc-target");
-            if (!id) return;
-            const target = document.getElementById(id);
-            if (!target) return;
-
-            ev.preventDefault();
-            target.scrollIntoView({ behavior: "smooth", block: "start" });
-
-            // Additional offset adjustment
-            window.setTimeout(() => {
-              window.scrollBy({ top: -headerOffset });
-            }, 50);
-          });
-        });
-
-        // Active section highlighting using IntersectionObserver
-        const activeSet = new Set();
-
-        let lastActiveId = null;
-
-        const observer = new IntersectionObserver(
-          (entries) => {
-            // Maintain a set of currently-intersecting headings, but do not
-            // do expensive layout reads (getBoundingClientRect) for all headings.
-            entries.forEach((entry) => {
-              const id = entry.target && entry.target.id;
-              if (!id) return;
-
-              if (entry.isIntersecting) activeSet.add(id);
-              else activeSet.delete(id);
-            });
-
-            // Pick the closest intersecting heading to the header offset.
-            // Use the data provided by the observer entries only.
-            let bestId = null;
-            let bestTopDelta = Infinity;
-
-            for (const entry of entries) {
-              const id = entry.target && entry.target.id;
-              if (!id) continue;
-              if (!activeSet.has(id)) continue;
-              if (!entry.isIntersecting) continue;
-
-              const rectTop = entry.boundingClientRect
-                ? entry.boundingClientRect.top
-                : 0;
-              const delta = Math.abs(rectTop - headerOffset);
-
-              if (delta < bestTopDelta) {
-                bestTopDelta = delta;
-                bestId = id;
-              }
-            }
-
-            // Fallback: if entries didn't include an intersecting one for some
-            // reason, keep lastActiveId.
-            if (!bestId) bestId = lastActiveId;
-            if (!bestId) return;
-
-            if (bestId === lastActiveId) return;
-            lastActiveId = bestId;
-
-            // Only update DOM when active section changes.
-            tocLinks.forEach((link) => {
-              const id = link.getAttribute("data-toc-target");
-              link.classList.toggle("is-active", bestId === id);
-            });
-          },
-          {
-            root: null,
-            // trigger when headings are near the top
-            rootMargin: `-${headerOffset + 10}px 0px -70% 0px`,
-            threshold: [0, 0.1, 0.25],
-          },
-        );
-
-
-        headings.forEach((h) => observer.observe(h));
-      } catch (_) {
-        // fail silently; TOC still works as basic anchor links
-      }
-    }
-
     const contentRoot = document.getElementById(contentMountId);
     if (contentRoot) {
       contentRoot.innerHTML = container.innerHTML;
-    }
 
-    if (window.hljs) window.hljs.highlightAll();
+      // Syntax highlighting
+      if (window.hljs) {
+        contentRoot.querySelectorAll("pre code").forEach((block) => {
+          window.hljs.highlightElement(block);
+        });
+      }
+
+      // KaTeX math rendering if available
+      if (window.renderMathInElement) {
+        window.renderMathInElement(contentRoot, {
+          delimiters: [
+            { left: "$$", right: "$$", display: true },
+            { left: "$", right: "$", display: false },
+            { left: "\\(", right: "\\)", display: false },
+            { left: "\\[", right: "\\]", display: true },
+          ],
+          throwOnError: false,
+        });
+      }
+    }
+  }
+
+  function setupTocBehavior(tocRootEl) {
+    try {
+      const tocLinks = Array.from(
+        tocRootEl.querySelectorAll("a[data-toc-target]"),
+      );
+      const headings = tocLinks
+        .map((a) =>
+          document.getElementById(a.getAttribute("data-toc-target")),
+        )
+        .filter(Boolean);
+
+      if (!headings.length) return;
+
+      const headerOffset = 96;
+
+      tocLinks.forEach((a) => {
+        a.addEventListener("click", (ev) => {
+          const id = a.getAttribute("data-toc-target");
+          if (!id) return;
+          const target = document.getElementById(id);
+          if (!target) return;
+
+          ev.preventDefault();
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+
+          window.setTimeout(() => {
+            window.scrollBy({ top: -headerOffset });
+          }, 50);
+        });
+      });
+
+      const activeSet = new Set();
+      let lastActiveId = null;
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            const id = entry.target && entry.target.id;
+            if (!id) return;
+            if (entry.isIntersecting) activeSet.add(id);
+            else activeSet.delete(id);
+          });
+
+          let bestId = null;
+          let bestTopDelta = Infinity;
+
+          for (const entry of entries) {
+            const id = entry.target && entry.target.id;
+            if (!id || !activeSet.has(id) || !entry.isIntersecting) continue;
+
+            const rectTop = entry.boundingClientRect
+              ? entry.boundingClientRect.top
+              : 0;
+            const delta = Math.abs(rectTop - headerOffset);
+
+            if (delta < bestTopDelta) {
+              bestTopDelta = delta;
+              bestId = id;
+            }
+          }
+
+          if (!bestId) bestId = lastActiveId;
+          if (!bestId || bestId === lastActiveId) return;
+          lastActiveId = bestId;
+
+          tocLinks.forEach((link) => {
+            const id = link.getAttribute("data-toc-target");
+            link.classList.toggle("is-active", bestId === id);
+          });
+        },
+        {
+          root: null,
+          rootMargin: `-${headerOffset + 10}px 0px -70% 0px`,
+          threshold: [0, 0.1, 0.25],
+        },
+      );
+
+      headings.forEach((h) => observer.observe(h));
+    } catch (_) {
+      // Graceful fallback: basic anchor links work natively
+    }
   }
 
   async function loadManifest(manifestUrl) {
-    const res = await fetch(manifestUrl, { cache: "no-store" });
+    const res = await fetch(manifestUrl);
     if (!res.ok) throw new Error(`Manifest load failed: ${res.status}`);
     return res.json();
   }
 
   async function loadText(url) {
-    const res = await fetch(url, { cache: "no-store" });
+    const res = await fetch(url);
     if (!res.ok) throw new Error(`Markdown load failed: ${res.status}`);
     return res.text();
   }
 
   async function renderBySlug({ slug, manifestUrl, markdownBasePath }) {
-    if (window.__debugInstrumentation && window.__debugInstrumentation.initLog)
-      window.__debugInstrumentation.initLog("blog-renderer", "blog-renderer");
-
-    const manifest = await loadManifest(manifestUrl);
-
-    const item = manifest.find((x) => x.slug === slug);
     const root = document.getElementById("blog-root");
     if (!root) return;
 
-    if (!item) {
-      root.innerHTML = `<div class="box"><h2>Blog not found</h2><p>Missing slug: ${escapeHtml(
-        slug,
-      )}</p></div>`;
+    let manifest;
+    try {
+      manifest = await loadManifest(manifestUrl);
+    } catch (e) {
+      root.innerHTML = `<div class="box"><h2>Unable to load blog</h2><p>Could not connect to blog catalog.</p><p><a class="button" href="../blogs.html">Back to Blogs</a></p></div>`;
       return;
     }
 
-    // Our markdown files live alongside the HTML inside the `blogs/` folder.
-    // On blogs/<slug>.html we should fetch ./<slug>.md
+    const item = manifest.find((x) => x.slug === slug);
+
+    if (!item) {
+      root.innerHTML = `<div class="box"><h2>Blog not found</h2><p>Could not find article: <strong>${escapeHtml(
+        slug,
+      )}</strong></p><p><a class="button" href="../blogs.html">Back to Blogs</a></p></div>`;
+      return;
+    }
+
     const markdownFile = item.markdownFile
       ? item.markdownFile.replace(/^blogs\//, "")
-      : `./${slug}.md`;
+      : `${slug}.md`;
 
-    // Ensure markdown is always fetched from the /blogs/ directory.
-    // GitHub Pages is case-sensitive and your site is served under a subpath, so:
-    // - markdownBasePath may be "../" (from /blogs/<slug>.html)
-    // - markdownFile is a bare filename like "linear-algebra-for-ml-part-1.md"
-    // The correct final path is always: <base> + "blogs/" + <filename>.
-    // Always load markdown from the /blogs/ folder.
-    // Construct explicitly to avoid any accidental omission of the `blogs/` path segment.
     const mdUrl = `${markdownBasePath || ""}blogs/${markdownFile}`;
-
-    // Back-compat fallback (kept, but primary path must always be /blogs/).
-    const fallbackMdUrl = `${markdownBasePath || ""}blogs/${markdownFile}`;
-
-    console.log("markdownBasePath =", markdownBasePath);
-    console.log("markdownFile =", markdownFile);
-    console.log("mdUrl =", mdUrl);
-
-    const mdRaw = await loadText(mdUrl).catch(() => loadText(fallbackMdUrl));
+    let mdRaw;
+    try {
+      mdRaw = await loadText(mdUrl);
+    } catch (err) {
+      root.innerHTML = `<div class="box"><h2>Unable to load article content</h2><p>File: ${escapeHtml(markdownFile)}</p><p><a class="button" href="../blogs.html">Back to Blogs</a></p></div>`;
+      return;
+    }
 
     const parsed = parseFrontMatter(mdRaw);
 
@@ -343,6 +355,14 @@
       author: parsed.frontMatter.author || item.author || "Ujjwal Singh",
     };
 
+    let featuredImgHtml = "";
+    if (fm.featuredImage) {
+      let fSrc = fm.featuredImage;
+      if (fSrc.startsWith("/")) fSrc = ".." + fSrc;
+      else if (fSrc.startsWith("assets/")) fSrc = "../" + fSrc;
+      featuredImgHtml = `<div class="blog-featured"><img src="${escapeHtml(fSrc)}" alt="${escapeHtml(fm.title)}" loading="lazy" /></div>`;
+    }
+
     root.innerHTML = `
       <article class="blog-article">
         <header class="blog-header">
@@ -351,10 +371,10 @@
             <span class="blog-meta-item"><strong>${escapeHtml(
               fm.category || "",
             )}</strong></span>
-            ${fm.date ? `<span class="blog-meta-dot">•</span><span>${escapeHtml(fm.date)}</span>` : ""}
-            ${fm.readingTime ? `<span class="blog-meta-dot">•</span><span>${escapeHtml(fm.readingTime)}</span>` : ""}
+            ${fm.date ? `<span class="blog-meta-dot">&bull;</span><span>${escapeHtml(fm.date)}</span>` : ""}
+            ${fm.readingTime ? `<span class="blog-meta-dot">&bull;</span><span>${escapeHtml(fm.readingTime)}</span>` : ""}
           </div>
-          ${fm.featuredImage ? `<div class="blog-featured"><img src="${escapeHtml(fm.featuredImage)}" alt="" /></div>` : ""}
+          ${featuredImgHtml}
           <div class="blog-author">By ${escapeHtml(fm.author || "Ujjwal Singh")}</div>
         </header>
 
@@ -365,13 +385,13 @@
 
         <footer class="blog-nav">
           <div class="blog-nav-left">
-            <a class="button" href="#" id="blog-prev" aria-disabled="true" style="display:none">&laquo; Previous</a>
+            <a class="button" href="#" id="blog-prev" style="display:none">&laquo; Previous</a>
           </div>
           <div class="blog-nav-right">
             <a class="button" href="../blogs.html" id="blog-back">Back to Blogs</a>
           </div>
           <div class="blog-nav-next">
-            <a class="button" href="#" id="blog-next" aria-disabled="true" style="display:none">Next &raquo;</a>
+            <a class="button" href="#" id="blog-next" style="display:none">Next &raquo;</a>
           </div>
         </footer>
       </article>
@@ -380,52 +400,46 @@
     renderMd(parsed.body, {
       tocMountId: "blog-toc",
       contentMountId: "blog-content",
+      slug: fm.slug || slug,
     });
 
-    if (manifest.length <= 1) return;
+    if (manifest.length > 1) {
+      const idx = manifest.findIndex((x) => x.slug === slug);
+      const prev = idx > 0 ? manifest[idx - 1] : null;
+      const next =
+        idx >= 0 && idx < manifest.length - 1 ? manifest[idx + 1] : null;
 
-    const idx = manifest.findIndex((x) => x.slug === slug);
-    const prev = idx > 0 ? manifest[idx - 1] : null;
-    const next =
-      idx >= 0 && idx < manifest.length - 1 ? manifest[idx + 1] : null;
+      const prevEl = document.getElementById("blog-prev");
+      if (prevEl && prev) {
+        prevEl.style.display = "inline-block";
+        prevEl.href = `./${prev.slug}.html`;
+      }
 
-    const prevEl = document.getElementById("blog-prev");
-    if (prevEl && prev) {
-      prevEl.style.display = "inline-block";
-      prevEl.href = `./${prev.slug}.html`;
-    }
-
-    const nextEl = document.getElementById("blog-next");
-    if (nextEl && next) {
-      nextEl.style.display = "inline-block";
-      nextEl.href = `./${next.slug}.html`;
+      const nextEl = document.getElementById("blog-next");
+      if (nextEl && next) {
+        nextEl.style.display = "inline-block";
+        nextEl.href = `./${next.slug}.html`;
+      }
     }
   }
 
-  window.BlogRenderer = { renderBySlug };
-
-  // Initialize AI summary exactly once per page load.
-  let aiSummaryInitialized = false;
-  function initAiSummaryIfPresentOnce() {
-    if (aiSummaryInitialized) return;
+  // Initialize AI summary once rendered
+  function initAiSummaryIfPresent() {
     try {
       if (
         window.BlogSummary &&
         typeof window.BlogSummary.initBlogSummarizer === "function"
       ) {
-        aiSummaryInitialized = true;
         window.BlogSummary.initBlogSummarizer();
       }
-    } catch (_) {
-      // If initialization threw, allow a retry on a subsequent call.
-    }
+    } catch (_) {}
   }
 
-  const _renderBySlug = renderBySlug;
   async function renderBySlugWrapped(args) {
-    await _renderBySlug(args);
-    initAiSummaryIfPresentOnce();
+    await renderBySlug(args);
+    initAiSummaryIfPresent();
   }
 
   window.BlogRenderer = { renderBySlug: renderBySlugWrapped };
 })();
+

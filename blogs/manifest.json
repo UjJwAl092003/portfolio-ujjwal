@@ -1,5 +1,64 @@
 [
   {
+    "slug": "evaluation_metrics_explained",
+    "title": "Evaluation Metrics in Machine Learning (Confusion Matrix, Precision, Recall, F1 Score)",
+    "description": "A complete beginner-friendly guide to classification evaluation metrics: confusion matrix, accuracy, precision, recall, and F1 score — with intuition, real-world examples, and the mathematical reasoning behind every formula.",
+    "date": "2026-07-22",
+    "category": "Machine Learning Algorithms",
+    "readingTime": "12 min read",
+    "tags": [
+      "Machine Learning",
+      "Evaluation Metrics",
+      "Classification",
+      "Confusion Matrix",
+      "Precision",
+      "Recall",
+      "F1 Score"
+    ],
+    "featuredImage": "",
+    "author": "Ujjwal Singh",
+    "markdownFile": "blogs/evaluation_metrics_explained.md"
+  },
+  {
+    "slug": "polynomial-regression-explained",
+    "title": "Polynomial Regression: Fitting Curves With a Straight Line Model",
+    "description": "Learn Polynomial Regression intuitively: how to expand features with PolynomialFeatures, why cross-terms like ab matter, and how to detect underfitting vs overfitting using learning curves.",
+    "date": "2026-07-18",
+    "category": "Machine Learning Algorithms",
+    "readingTime": "10 min read",
+    "tags": [
+      "Machine Learning",
+      "Polynomial Regression",
+      "Regression",
+      "Overfitting",
+      "Underfitting",
+      "Learning Curves"
+    ],
+    "featuredImage": "assets/images/blogs/polynomial-regression/poly_raw_data_scatter.png",
+    "author": "Ujjwal Singh",
+    "markdownFile": "blogs/polynomial-regression-explained.md"
+  },
+  {
+    "slug": "gradient-descent-explained",
+    "title": "Gradient Descent, Explained Like You're Actually Walking Down a Mountain",
+    "description": "An intuition-first guide to Gradient Descent: cost surface, gradient, update rule, learning rate effects, and Batch/SGD/Mini-Batch with a from-scratch Python implementation.",
+    "date": "2026-07-16",
+    "category": "Machine Learning Algorithms",
+    "readingTime": "14 min read",
+    "tags": [
+      "Machine Learning",
+      "Gradient Descent",
+      "Optimization",
+      "Learning Rate",
+      "Batch GD",
+      "SGD",
+      "Mini-Batch GD"
+    ],
+    "featuredImage": "assets/images/blogs/gradient-descent/bowl_descent.png",
+    "author": "Ujjwal Singh",
+    "markdownFile": "blogs/gradient-descent-explained.md"
+  },
+  {
     "slug": "linear-regression-explained",
     "title": "Linear Regression, Explained Like You're Pricing Insurance for the First Time",
     "description": "A start-to-finish intuition-first explanation of Linear Regression: OLS, the cost function, the normal equation, and evaluation metrics—plus a closed-form implementation test.",
@@ -13,42 +72,77 @@
       "Ordinary Least Squares",
       "Normal Equation"
     ],
-    "featuredImage": "",
+    "featuredImage": "assets/images/blogs/linear-regression/best_fit_line.png",
     "author": "Ujjwal Singh",
     "markdownFile": "blogs/linear-regression-explained.md"
   },
   {
-    "slug": "naive-bayes-explained",
-    "title": "Naive Bayes Explained: From Avocados to Spam Filters",
-    "description": "Understand Naive Bayes intuitively using avocados and spam filtering.",
-    "date": "2026-07-05",
-    "category": "Machine Learning Algorithms",
-    "readingTime": "8 min read",
+    "slug": "confidence-interval",
+    "title": "Confidence Intervals: A Beginner-Friendly Guide",
+    "description": "Learn confidence intervals from absolute scratch: population vs sample, point estimates, margin of error, critical z/t values, and how to interpret confidence levels correctly.",
+    "date": "2026-07-10",
+    "category": "Mathematics",
+    "readingTime": "16 min read",
     "tags": [
-      "Machine Learning",
-      "Naive Bayes",
-      "Classification"
+      "Statistics",
+      "Probability",
+      "Confidence Interval",
+      "Data Science",
+      "Mathematics"
     ],
-    "featuredImage": "/images/blogs/naive-bayes.png",
+    "featuredImage": "assets/images/blogs/confidence-interval/z_distribution_critical_values.png",
     "author": "Ujjwal Singh",
-    "markdownFile": "blogs/naive-bayes-explained.md"
+    "markdownFile": "blogs/confidence-interval.md"
   },
   {
-    "slug": "matplotlib-for-machine-learning-a-complete-beginners-guide",
-    "title": "Matplotlib for Machine Learning: A Complete Beginner's Guide",
-    "description": "If you are starting your machine learning journey, you will hear one thing again and again: data alone does not tell a story. You have to see it to understand it. That is exactly why Matplotlib exists.",
-    "date": "2026-07-06",
+    "slug": "central-limit-theorem",
+    "title": "Understanding the Central Limit Theorem: From Coin Flips to One of the Most Beautiful Results in Statistics",
+    "description": "The Central Limit Theorem (CLT) explained intuitively—starting from Bernoulli and Binomial distributions, building intuition for sampling distributions, and showing why sample means approach a Normal distribution.",
+    "date": "2026-07-09",
+    "category": "Mathematics",
+    "readingTime": "15 min read",
+    "tags": [
+      "Statistics",
+      "Probability",
+      "Central Limit Theorem"
+    ],
+    "featuredImage": "assets/images/blogs/central-limit-theorem/clt_demo.png",
+    "author": "Ujjwal Singh",
+    "markdownFile": "blogs/central-limit-theorem.md"
+  },
+  {
+    "slug": "python-recall",
+    "title": "Python Recall: The Concepts You Always Forget",
+    "description": "This is not a complete Python course. It deliberately skips the basics you already know and skips OOP entirely, since that deserves its own separate note.",
+    "date": "2026-07-09",
     "category": "Python for Machine Learning",
-    "readingTime": "12 min read",
+    "readingTime": "8 min read",
+    "tags": [
+      "Python",
+      "Programming Concepts",
+      "Recall"
+    ],
+    "featuredImage": "",
+    "author": "Ujjwal Singh",
+    "markdownFile": "blogs/python-recall.md"
+  },
+  {
+    "slug": "numpy-for-machine-learning",
+    "title": "NumPy for Machine Learning: A Complete Beginner's Guide",
+    "description": "Before you can do anything in machine learning, whether that is loading a dataset, running matrix calculus, or feeding numbers into a model, you need a way to store and manipulate large collections of numbers efficiently.",
+    "date": "2026-07-08",
+    "category": "Python for Machine Learning",
+    "readingTime": "15 min read",
     "tags": [
       "Machine Learning",
-      "Matplotlib",
-      "Data Visualization",
-      "Python"
+      "NumPy",
+      "Python",
+      "Arrays",
+      "Data Processing"
     ],
-    "featuredImage": "/images/blogs/matplotlib.png",
+    "featuredImage": "",
     "author": "Ujjwal Singh",
-    "markdownFile": "blogs/matplotlib.md"
+    "markdownFile": "blogs/numpy-for-machine-learning.md"
   },
   {
     "slug": "linear-algebra-for-ml-part-1",
@@ -69,93 +163,36 @@
     "markdownFile": "blogs/linear-algebra-for-ml-part-1.md"
   },
   {
-    "slug": "numpy-for-machine-learning",
-    "title": "NumPy for Machine Learning: A Complete Beginner's Guide",
-    "description": "Before you can do anything in machine learning, whether that is loading a dataset, running matrix calculus, or feeding numbers into a model, you need a way to store and manipulate large collections of numbers efficiently.",
-    "date": "2026-07-08",
+    "slug": "matplotlib-for-machine-learning-a-complete-beginners-guide",
+    "title": "Matplotlib for Machine Learning: A Complete Beginner's Guide",
+    "description": "If you are starting your machine learning journey, you will hear one thing again and again: data alone does not tell a story. You have to see it to understand it. That is exactly why Matplotlib exists.",
+    "date": "2026-07-06",
     "category": "Python for Machine Learning",
-    "readingTime": "15 min read",
+    "readingTime": "12 min read",
     "tags": [
       "Machine Learning",
-      "NumPy",
-      "Python",
-      "Arrays",
-      "Data Processing"
-    ],
-    "featuredImage": "/images/blogs/numpy.png",
-    "author": "Ujjwal Singh",
-    "markdownFile": "blogs/numpy-for-machine-learning.md"
-  },
-  {
-    "slug": "python-recall",
-    "title": "Python Recall: The Concepts You Always Forget",
-    "description": "This is not a complete Python course. It deliberately skips the basics you already know and skips OOP entirely, since that deserves its own separate note.",
-    "date": "2026-07-09",
-    "category": "Python for Machine Learning",
-    "readingTime": "8 min read",
-    "tags": [
-      "Python",
-      "Programming Concepts",
-      "Recall"
+      "Matplotlib",
+      "Data Visualization",
+      "Python"
     ],
     "featuredImage": "",
     "author": "Ujjwal Singh",
-    "markdownFile": "blogs/python-recall.md"
+    "markdownFile": "blogs/matplotlib-for-machine-learning-a-complete-beginners-guide.md"
   },
   {
-    "slug": "central-limit-theorem",
-    "title": "Understanding the Central Limit Theorem: From Coin Flips to One of the Most Beautiful Results in Statistics",
-    "description": "The Central Limit Theorem (CLT) explained intuitively—starting from Bernoulli and Binomial distributions, building intuition for sampling distributions, and showing why sample means approach a Normal distribution.",
-    "date": "2026-07-09",
-    "category": "Mathematics",
-    "readingTime": "15 min read",
-    "tags": [
-      "Statistics",
-      "Probability",
-      "Central Limit Theorem"
-    ],
-    "featuredImage": "/images/blogs/central-limit-theorem/central-limit-theorem.png",
-    "author": "Ujjwal Singh",
-    "markdownFile": "blogs/central-limit-theorem.md"
-  },
-  {
-    "slug": "gradient-descent-explained",
-    "title": "Gradient Descent, Explained Like You're Actually Walking Down a Mountain",
-    "description": "An intuition-first guide to Gradient Descent: cost surface, gradient, update rule, learning rate effects, and Batch/SGD/Mini-Batch with a from-scratch Python implementation.",
-    "date": "2026-07-16",
+    "slug": "naive-bayes-explained",
+    "title": "Naive Bayes Explained: From Avocados to Spam Filters",
+    "description": "Understand Naive Bayes intuitively using avocados and spam filtering.",
+    "date": "2026-07-05",
     "category": "Machine Learning Algorithms",
-    "readingTime": "14 min read",
+    "readingTime": "8 min read",
     "tags": [
       "Machine Learning",
-      "Gradient Descent",
-      "Optimization",
-      "Learning Rate",
-      "Batch GD",
-      "SGD",
-      "Mini-Batch GD"
+      "Naive Bayes",
+      "Classification"
     ],
-    "featuredImage": "/images/blogs/gradient-descent/bowl_descent.png",
+    "featuredImage": "",
     "author": "Ujjwal Singh",
-    "markdownFile": "blogs/gradient-descent-explained.md"
-  },
-  {
-    "slug": "polynomial-regression-explained",
-    "title": "Polynomial Regression: Fitting Curves With a Straight Line Model",
-    "description": "Learn Polynomial Regression intuitively: how to expand features with PolynomialFeatures, why cross-terms like ab matter, and how to detect underfitting vs overfitting using learning curves.",
-    "date": "2026-07-18",
-    "category": "Machine Learning Algorithms",
-    "readingTime": "10 min read",
-    "tags": [
-      "Machine Learning",
-      "Polynomial Regression",
-      "Regression",
-      "Overfitting",
-      "Underfitting",
-      "Learning Curves"
-    ],
-    "featuredImage": "/images/blogs/polynomial-regression/poly_raw_data_scatter.png",
-    "author": "Ujjwal Singh",
-    "markdownFile": "blogs/polynomial-regression-explained.md"
+    "markdownFile": "blogs/naive-bayes-explained.md"
   }
 ]
-

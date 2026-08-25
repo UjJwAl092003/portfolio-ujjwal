@@ -18,8 +18,7 @@
         <div class="inner">
           <header id="header">
             <a href="index.html" class="logo"
-              ><strong>Ujjwal Singh</strong> • Machine Learning</a
-            >
+              ><strong>Ujjwal Singh</strong> &bull; Machine Learning</a>
             <ul class="icons">
               <li>
                 <a
@@ -27,8 +26,7 @@
                   target="_blank"
                   rel="noopener"
                   class="icon brands fa-github"
-                  ><span class="label">GitHub</span></a
-                >
+                  ><span class="label">GitHub</span></a>
               </li>
               <li>
                 <a
@@ -36,15 +34,13 @@
                   target="_blank"
                   rel="noopener"
                   class="icon brands fa-linkedin"
-                  ><span class="label">LinkedIn</span></a
-                >
+                  ><span class="label">LinkedIn</span></a>
               </li>
               <li>
                 <a
                   href="mailto:ujjwal2392003@gmail.com"
                   class="icon solid fa-envelope"
-                  ><span class="label">Email</span></a
-                >
+                  ><span class="label">Email</span></a>
               </li>
             </ul>
           </header>
@@ -54,17 +50,10 @@
               <h2>Projects</h2>
             </header>
 
-            <p style="margin-bottom: 1.5rem">
-              Exciting Machine Learning projects are currently under
-              development.
-              <strong>Coming Soon.</strong>
-            </p>
-
-            <div class="posts" id="projects-grid" style="display: none"></div>
+            <div class="posts" id="projects-grid"></div>
           </section>
         </div>
       </div>
-
       <div id="sidebar">
         <div class="inner">
           <section id="search" class="alt">
@@ -90,12 +79,12 @@
             <header class="major">
               <h2>Projects Status</h2>
             </header>
-            <p>ML projects will be added soon.</p>
+            <p>Machine Learning projects will be added soon.</p>
           </section>
 
           <footer id="footer">
             <p class="copyright">
-              © Ujjwal Singh. Building in Public. Learning Never Stops.
+              &copy; Ujjwal Singh. Building in Public. Learning Never Stops.
             </p>
           </footer>
         </div>
@@ -107,14 +96,71 @@
     <script src="assets/js/breakpoints.min.js"></script>
     <script src="assets/js/util.js"></script>
     <script src="assets/js/main.js"></script>
-    <script src="assets/js/debug-instrumentation-entry.js"></script>
 
     <script>
-      // Projects are intentionally placeholder-only for now (PRD: "Projects Coming Soon").
-      // When you want to display projects, remove/hook this section to data/projects.json.
       (function () {
-        const grid = document.getElementById("projects-grid");
-        if (grid) grid.style.display = "none";
+        var grid = document.getElementById("projects-grid");
+        if (!grid) return;
+
+        var fallbackProjects = [
+          {
+            "id": "book-sales-analysis",
+            "title": "Book Sales & Ratings Analysis",
+            "description": "Exploratory data analysis of a multi-genre book catalog, digging into pricing, genre performance, author reputation, and sales trends to find actionable publisher insights.",
+            "technologies": ["Python", "Pandas", "NumPy", "Matplotlib", "Seaborn", "Jupyter"]
+          }
+        ];
+
+        function renderProjects(projects) {
+          if (!projects || projects.length === 0) {
+            grid.innerHTML =
+              '<article><div class="content"><h3>No projects yet</h3><p>Projects will be added soon.</p></div></article>';
+            return;
+          }
+
+          grid.innerHTML = projects
+            .map(function (p) {
+              var techs = (p.technologies || [])
+                .map(function (t) {
+                  return '<span class="tech-badge">' + t + "</span>";
+                })
+                .join("");
+              var detailUrl = "projects/" + p.id + ".html";
+              return (
+                '<article>' +
+                '<div class="content" style="padding-top: 0.25rem;">' +
+                '<h3 style="margin-bottom: 0.35rem;"><a href="' + detailUrl + '">' +
+                p.title +
+                "</a></h3>" +
+                '<p style="margin: 0.5rem 0 0.75rem 0; font-size: 0.95rem; color: inherit;">' +
+                p.description +
+                "</p>" +
+                '<div style="margin-bottom: 1rem; display: flex; flex-wrap: wrap; gap: 0.4rem;">' +
+                techs +
+                "</div>" +
+                '<ul class="actions">' +
+                '<li><a href="' +
+                detailUrl +
+                '" class="button">View Project</a></li>' +
+                "</ul>" +
+                "</div>" +
+                "</article>"
+              );
+            })
+            .join("");
+        }
+
+        fetch("data/projects.json")
+          .then(function (res) {
+            if (!res.ok) throw new Error("Failed to load projects");
+            return res.json();
+          })
+          .then(function (projects) {
+            renderProjects(projects);
+          })
+          .catch(function () {
+            renderProjects(fallbackProjects);
+          });
       })();
     </script>
   </body>

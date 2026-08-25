@@ -1,3 +1,15 @@
+---
+title: "Understanding the Central Limit Theorem: From Coin Flips to One of the Most Beautiful Results in Statistics"
+slug: "central-limit-theorem"
+date: "2026-04-10"
+category: "Statistics"
+readingTime: "15 min read"
+description: "From Bernoulli trials and Binomial distributions to the Normal distribution and Central Limit Theorem with real Titanic data."
+tags: ["Statistics", "Machine Learning", "Data Science", "Python"]
+featuredImage: "../assets/images/blogs/central-limit-theorem/clt_demo.png"
+author: "Ujjwal Singh"
+---
+
 # Understanding the Central Limit Theorem: From Coin Flips to One of the Most Beautiful Results in Statistics
 
 The Central Limit Theorem, usually just called CLT, is one of those topics that sounds intimidating the first time you hear its name, but turns out to be one of the most genuinely satisfying ideas in all of statistics once it actually clicks. Mathematicians consider it one of the most beautiful results in the entire field, and by the end of this note, you will understand exactly why.
@@ -32,7 +44,7 @@ Here `p` is the probability of success. Plugging in `x = 1` gives you back exact
 
 For a fair coin, where `p = 0.5`, this gives P(X=1) = 0.5 and P(X=0) = 0.5, which matches common sense exactly. Plotting this out, the Bernoulli distribution always looks like exactly two bars, one at 0 and one at 1, whose heights add up to exactly 1.
 
-![Bernoulli Distribution PMF](../assets/images/blogs/bernoulli_pmf.png)
+![Bernoulli Distribution PMF](../assets/images/blogs/central-limit-theorem/bernoulli_pmf.png)
 
 _Bernoulli outcomes show up as probabilities at 0 and 1 (success/failure)._
 
@@ -105,7 +117,7 @@ When p is pushed higher, closer to 1, the graph shifts noticeably to the right, 
 
 When p is pushed lower, closer to 0, the graph shifts to the left instead, since lower numbers of successes become more likely.
 
-![Binomial distribution shifting with different values of p](../assets/images/blogs/binomial_shift.png)
+![Binomial distribution shifting with different values of p](../assets/images/blogs/central-limit-theorem/binomial_shift.png)
 
 _Binomial PMFs shift left/right as the success probability p changes._
 
@@ -153,7 +165,7 @@ Roughly 99.7 percent of the data falls within three standard deviations of the m
 
 For example, imagine test scores across a large class are normally distributed with a mean of 70 and a standard deviation of 10. Roughly 68 percent of students scored between 60 and 80. Roughly 95 percent of students scored between 50 and 90. Almost every student, about 99.7 percent, scored between 40 and 100.
 
-![The Normal Distribution and the 68-95-99.7 Rule](../assets/images/blogs/normal_distribution.png)
+![The Normal Distribution and the 68-95-99.7 Rule](../assets/images/blogs/central-limit-theorem/normal_distribution.png)
 
 _The Normal bell curve and the 68–95–99.7 rule for standard-deviation bands._
 
@@ -219,7 +231,7 @@ Once you plot all one thousand of those recorded averages as a histogram, someth
 
 This is the exact magic the Central Limit Theorem promises, and it holds no matter what the original population distribution looked like, whether Uniform, Exponential, Binomial, Gamma, or anything else, as long as certain basic conditions, covered shortly, are met.
 
-![Central Limit Theorem demonstration: a skewed population produces a normal sampling distribution of the mean](../assets/images/blogs/clt_demo.png)
+![Central Limit Theorem demonstration: a skewed population produces a normal sampling distribution of the mean](../assets/images/blogs/central-limit-theorem/clt_demo.png)
 
 _CLT: sample means from a skewed population form an approximately Normal distribution._
 
@@ -297,7 +309,7 @@ upper limit = 32.5 + 2 * 1 = 34.5
 
 So instead of claiming the population mean is exactly 32.5, which might be slightly wrong, you can confidently claim the true population mean lies somewhere between 30.5 and 34.5, and you would be right about 95 percent of the time you made a claim like that.
 
-![95% Confidence Interval around the sample mean](../assets/images/blogs/confidence_interval.png)
+![95% Confidence Interval around the sample mean](../assets/images/blogs/central-limit-theorem/confidence_interval.png)
 
 _95% confidence interval around the sample mean using standard errors._
 

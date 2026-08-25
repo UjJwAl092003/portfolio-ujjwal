@@ -1,6 +1,18 @@
+---
+title: "Linear Regression, Explained Like You're Pricing Insurance for the First Time"
+slug: "linear-regression-explained"
+date: "2026-04-05"
+category: "Machine Learning"
+readingTime: "12 min read"
+description: "A beginner-friendly walkthrough of Ordinary Least Squares (OLS) Linear Regression, deriving the normal equation and evaluating assumptions."
+tags: ["Machine Learning", "Linear Regression", "Python", "Data Science"]
+featuredImage: "../assets/images/blogs/linear-regression/best_fit_line.png"
+author: "Ujjwal Singh"
+---
+
 # Linear Regression, Explained Like You're Pricing Insurance for the First Time
 
-how much to charge them. No formula exists yet. Just a spreadsheet with 1,338 past customers and what they were actually charged.
+Imagine you work at a health insurance company and a new customer walks through the door. You need to decide how much to charge them. No formula exists yet. Just a spreadsheet with 1,338 past customers and what they were actually charged.
 
 <img src="../assets/images/blogs/linear-regression/best_fit_line.png"
      alt="Best fit line showing the linear regression trend"
@@ -10,10 +22,8 @@ how much to charge them. No formula exists yet. Just a spreadsheet with 1,338 pa
 
 This is exactly the problem Linear Regression was built to solve, and it is exactly the problem this note walks through, start to finish, using a real Medical Cost dataset with those exact six features (`age`, `sex`, `bmi`, `children`, `smoker`, `region`) predicting one target: `charges`.
 
-
 By the end, you will understand not just how to run Linear Regression, but exactly what is happening mathematically underneath it, including where its famous formula comes from and how to judge whether your predictions are actually any good.
 
-![Which line best describes the trend in the data](images/best_fit_line.png)
 
 Picture a simpler example first: time spent studying versus exam score. Plenty of different lines could be drawn through that cloud of points, but most of them clearly miss the trend. The chart above shows two poor attempts in gray, and the actual best fit line, the one Linear Regression solves for mathematically rather than by eye, in solid color. The whole rest of this note is really about how that one best line gets found, precisely, for six features at once instead of just one.
 

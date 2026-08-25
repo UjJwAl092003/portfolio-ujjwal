@@ -127,8 +127,9 @@ Open the project in VS Code and run it using Live Server.
 
 ## Connect With Me
 
-- LinkedIn: https://www.linkedin.com/in/your-linkedin
+- LinkedIn: https://www.linkedin.com/in/ujjwal-singh-616908226/
 - GitHub: https://github.com/UjJwAl092003
+- Email: ujjwal2392003@gmail.com
 - Portfolio: https://ujjwal092003.github.io/portfolio-ujjwal/
 
 ---

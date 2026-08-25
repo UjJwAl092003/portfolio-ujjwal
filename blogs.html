@@ -163,8 +163,6 @@
     <script src="assets/js/util.js"></script>
     <script src="assets/js/main.js"></script>
 
-    <script src="assets/js/debug-instrumentation-entry.js"></script>
-
     <script>
       (function () {
         const grid = document.getElementById("blogs-grid");
@@ -176,7 +174,6 @@
         const paginationEl = document.getElementById("blogs-pagination");
 
         let items = [];
-
         let filtered = [];
         let page = 1;
         const pageSize = 6;
@@ -191,7 +188,8 @@
             const matchesQuery =
               !q ||
               (b.title || "").toLowerCase().includes(q) ||
-              (b.description || "").toLowerCase().includes(q);
+              (b.description || "").toLowerCase().includes(q) ||
+              (b.tags || []).some((t) => t.toLowerCase().includes(q));
 
             const matchesCat = cat === "all" || (b.category || "") === cat;
             return matchesQuery && matchesCat;
@@ -224,22 +222,29 @@
           const end = start + pageSize;
           const visible = filtered.slice(start, end);
 
+          if (visible.length === 0) {
+            grid.innerHTML = '<article><div class="content"><h3>No matching blogs</h3><p>Try adjusting your search terms or category filter.</p></div></article>';
+            return;
+          }
+
           grid.innerHTML = visible
             .map((b) => {
-              const thumb = b.thumbnail || "images/blogs/thumb-ml.jpg";
+              const thumb = b.thumbnail || b.featuredImage || "";
               const url = b.url || `blogs/${b.slug}.html`;
+              const imgTag = thumb
+                ? `<a href="${url}" class="image"><img src="${thumb}" alt="${b.title}" style="width:100%;height:170px;object-fit:cover;border-radius:0.375em;" loading="lazy" /></a>`
+                : "";
 
               return `
                       <article>
+                        ${imgTag}
                         <div class="content" style="padding-top: 0.25rem;">
-                          <h3 style="margin-bottom: 0.35rem;">${b.title}</h3>
-                          <p style="margin: 0 0 0.75rem 0; font-size: 0.95rem; color: inherit;">
+                          <h3 style="margin-bottom: 0.35rem;"><a href="${url}">${b.title}</a></h3>
+                          <p style="margin: 0 0 0.75rem 0; font-size: 0.85rem; opacity: 0.85;">
                             ${b.date ? `${b.date}` : ""}
-                            ${b.readingTime ? `${b.date ? " • " : ""}${b.readingTime}` : ""}
+                            ${b.readingTime ? `${b.date ? " &bull; " : ""}${b.readingTime}` : ""}
                           </p>
-
-                          <p>${b.description || ""}</p>
-
+                          <p style="margin: 0.5rem 0 0.75rem 0; font-size: 0.95rem; color: inherit;">${b.description || ""}</p>
                           <ul class="actions">
                             <li><a href="${url}" class="button">Read More</a></li>
                           </ul>
@@ -253,34 +258,27 @@
         async function loadBlogs() {
           try {
             const res = await fetch("blogs/manifest.json");
+            if (!res.ok) throw new Error("Status " + res.status);
             items = await res.json();
 
-            // Enrich with computed fields for existing template
             items = items
               .map((b) => {
+                var thumb = b.featuredImage || b.thumbnail || "";
+                if (thumb.charAt(0) === "/") thumb = thumb.substring(1);
                 return {
                   ...b,
                   url: b.url || `blogs/${b.slug}.html`,
                   description: b.description || b.excerpt || "",
-
-                  thumbnail:
-                    b.thumbnail ||
-                    b.featuredImage ||
-                    "images/blogs/thumb-ml.jpg",
+                  thumbnail: thumb,
                 };
               })
               .sort((a, b) => (b.date || "").localeCompare(a.date || ""));
           } catch (e) {
             grid.innerHTML =
-              "<article><h3>TODO: Add blogs/manifest.json entries</h3><p>Could not load blog data.</p></article>";
+              '<article><div class="content"><h3>Unable to load blogs</h3><p>Please check back shortly or explore other sections from the menu.</p></div></article>';
             return;
           }
 
-          // Only one (or zero) blog => hide pagination.
-          if (paginationEl) paginationEl.style.display = "none";
-
-          // Build categories dynamically from blogs/manifest.json
-          // (filter should auto-update whenever categories are added/changed in the manifest)
           const cats = Array.from(
             new Set(
               items.map((b) => (b.category ? b.category : "")).filter(Boolean),
@@ -297,9 +295,6 @@
 
           filtered = items.slice();
           page = 1;
-
-          if (paginationEl && items.length <= pageSize)
-            paginationEl.style.display = "none";
 
           render();
           updatePagination();

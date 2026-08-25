@@ -1,10 +1,19 @@
+---
+title: "Confidence Intervals: A Beginner-Friendly Guide"
+slug: "confidence-interval"
+date: "2026-04-12"
+category: "Statistics"
+readingTime: "14 min read"
+description: "Confidence intervals from scratch: sampling distributions, margin of error, Z-procedure, and Student's t-distribution with real-world examples."
+tags: ["Statistics", "Machine Learning", "Data Science", "Python"]
+featuredImage: "../assets/images/blogs/confidence-interval/z_distribution_critical_values.png"
+author: "Ujjwal Singh"
+---
+
 # Confidence Intervals — A Beginner-Friendly Guide
 
 > These notes explain Confidence Intervals (CI) from absolute scratch. No prior statistics background needed — just read top to bottom in order.
 
----
-
----
 
 ## 1. Warm-up: Population vs Sample
 
@@ -190,7 +199,7 @@ Where:
 
 For a `(1 − α)×100%` confidence interval, we place an area of `(1 − α)` in the middle of the standard normal curve, and split the remaining area `α` evenly into the two tails (`α/2` on each side).
 
-![Standard Normal Distribution with 95% critical values](assets/images/blogs/confidence-interval/z_distribution_critical_values.png)
+![Standard Normal Distribution with 95% critical values](../assets/images/blogs/confidence-interval/z_distribution_critical_values.png)
 
 ### Common Z-values for popular confidence levels
 
@@ -363,7 +372,7 @@ Imagine repeating the entire process — draw a random sample, calculate a 95% C
 
 Some intervals will land squarely around μ; occasionally, due to an unusually small or large sample mean, an interval will completely miss μ.
 
-![Repeated sampling confidence intervals](/assets/images/blogs/confidence-interval/ci_repeated_sampling.png)
+![Repeated sampling confidence intervals](../assets/images/blogs/confidence-interval/ci_repeated_sampling.png)
 
 In the picture above, the black vertical line represents the true (fixed, usually unknown) population mean μ. Each horizontal line is one 95% CI from one random sample — the dot in the middle is that sample's x̄. **Blue** intervals captured μ; **red** intervals missed it. Roughly 95% of many such intervals will be blue.
 
@@ -433,7 +442,7 @@ Three things control the **width** (margin of error) of the interval:
 - Larger n → **narrower** interval (more data = more precision), because the margin of error shrinks proportional to `1/√n`.
 - But there are **diminishing returns**: going from n=10 to n=30 shrinks the interval a lot; going from n=200 to n=500 barely shrinks it further.
 
-![Margin of Error vs Sample Size](images/margin_of_error_vs_sample_size.png)
+![Margin of Error vs Sample Size](../assets/images/blogs/confidence-interval/margin_of_error_vs_sample_size.png)
 
 ---
 
@@ -495,7 +504,7 @@ It was developed by a statistician who published under the pen name **"Student"*
 
 It looks similar to the normal (bell) curve — symmetric about zero, bell-shaped — but with **heavier tails** (more area in the tails) and a **lower peak**, to account for the added uncertainty of estimating σ using a sample statistic.
 
-![t-distribution vs Normal distribution](images/t_vs_normal_distribution.png)
+![t-distribution vs Normal distribution](../assets/images/blogs/confidence-interval/t_vs_normal_distribution.png)
 
 ### Key parameter: Degrees of Freedom (df)
 

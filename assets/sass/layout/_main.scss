@@ -24,6 +24,11 @@
 				 	border-top: 0 !important;
 				}
 			}
+
+			> header:first-child,
+			> section:first-child {
+				padding-top: 0.5em;
+			}
 		}
 
 		@include breakpoint('<=xlarge') {

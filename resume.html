@@ -54,50 +54,107 @@
               <h2>Resume</h2>
             </header>
 
-            <p>
-              View and download your resume.
-              <strong
-                >Replace <code>Resume_MTS.pdf</code> in this folder to update
-                the resume.</strong
-              >
+            <p style="font-size: 1.05rem; line-height: 1.7;">
+              Computer Science graduate specializing in Machine Learning and mathematical foundations from first principles. Experienced in technical problem solving, algorithm design, and educational content creation.
             </p>
 
             <ul class="actions">
               <li>
-                <a
-                  class="button big"
-                  href="Resume_MTS.pdf"
-                  target="_blank"
-                  rel="noopener"
-                  >View Resume</a
-                >
+                <button class="button primary" onclick="window.print()">
+                  <i class="icon solid fa-print" style="margin-right:0.4rem;"></i> Print / Save as PDF
+                </button>
               </li>
               <li>
-                <a class="button big" href="Resume_MTS.pdf" download
-                  >Download Resume</a
-                >
+                <a class="button" href="mailto:ujjwal2392003@gmail.com">
+                  <i class="icon solid fa-envelope" style="margin-right:0.4rem;"></i> Contact Me
+                </a>
               </li>
             </ul>
 
             <hr class="major" />
 
-            <h3>Education</h3>
-            <p>
-              TODO: If you want the resume page to include education/experience
-              text, populate it from Resume. (Kept minimal to preserve layout.)
-            </p>
+            <section>
+              <header class="major"><h3>Education</h3></header>
+              <ul>
+                <li>
+                  <strong>Bachelor of Technology (B.Tech.) in Computer Science &amp; Engineering</strong>
+                  <div>Madan Mohan Malaviya University of Technology (MMMUT) &bull; Gorakhpur, UP, India</div>
+                  <div style="opacity: 0.85;">Nov 2021 &ndash; Jun 2025 | <strong>CGPA: 7.85 / 10.0</strong></div>
+                </li>
+              </ul>
+            </section>
+
+            <hr class="major" />
+
+            <section>
+              <header class="major"><h3>Achievements</h3></header>
+              <div class="features">
+                <article>
+                  <div class="content">
+                    <h4>3x GATE (CS) Qualified</h4>
+                    <p>Qualified GATE Computer Science in 2024, 2025, and 2026.</p>
+                  </div>
+                </article>
+                <article>
+                  <div class="content">
+                    <h4>GATE 2026 &mdash; AIR 1308</h4>
+                    <p>Secured All India Rank 1308 in CSE with a 99.38 percentile.</p>
+                  </div>
+                </article>
+              </div>
+            </section>
+
+            <hr class="major" />
+
+            <section>
+              <header class="major"><h3>Experience</h3></header>
+              <div class="posts">
+                <article>
+                  <h4>GeeksforGeeks &mdash; Freelance Technical Contributor</h4>
+                  <p style="opacity: 0.85; margin-bottom: 0.5rem;">Apr 2025 &ndash; Present</p>
+                  <ul>
+                    <li>Create and review high-quality technical content across Computer Science topics.</li>
+                    <li>Develop educational resources and coding problems to help learners strengthen problem-solving skills.</li>
+                    <li>Collaborate on technical content focused on accuracy, clarity, and learner engagement.</li>
+                  </ul>
+                </article>
+                <article>
+                  <h4>GeeksforGeeks &mdash; Member of Technical Staff (Intern)</h4>
+                  <p style="opacity: 0.85; margin-bottom: 0.5rem;">Dec 2024 &ndash; Jun 2025</p>
+                  <ul>
+                    <li>Authored Data Structures &amp; Algorithms (DSA) problems for coding contests including Job-A-Thon and GFG 160.</li>
+                    <li>Enhanced technical articles by refining code implementations, adding optimal approaches, and clarifying explanations.</li>
+                    <li>Partnered with content and engineering teams to ensure rigor and clarity across published materials.</li>
+                  </ul>
+                </article>
+              </div>
+            </section>
+
+            <hr class="major" />
+
+            <section>
+              <header class="major"><h3>Technical Skills</h3></header>
+              <div class="row">
+                <div class="col-6 col-12-small">
+                  <h4>Languages &amp; Core</h4>
+                  <p>Python, C++, SQL, Data Structures &amp; Algorithms</p>
+                  <h4>Machine Learning &amp; Math</h4>
+                  <p>Linear Algebra, Multivariable Calculus, Probability &amp; Statistics, Scikit-learn, NumPy, Pandas, Matplotlib, Seaborn</p>
+                </div>
+                <div class="col-6 col-12-small">
+                  <h4>Tools &amp; Platforms</h4>
+                  <p>Git, GitHub, Jupyter Notebooks, VS Code, Linux</p>
+                  <h4>Specializations</h4>
+                  <p>Supervised Learning, Optimization (Gradient Descent), Exploratory Data Analysis (EDA), Technical Writing</p>
+                </div>
+              </div>
+            </section>
           </section>
         </div>
       </div>
 
       <div id="sidebar">
         <div class="inner">
-          <section id="search" class="alt">
-            <form method="post" action="#">
-              <input type="text" name="query" id="query" placeholder="Search" />
-            </form>
-          </section>
-
           <nav id="menu">
             <header class="major">
               <h2>Menu</h2>
@@ -111,9 +168,20 @@
             </ul>
           </nav>
 
+          <section>
+            <header class="major">
+              <h2>Get in Touch</h2>
+            </header>
+            <ul class="contact">
+              <li class="icon solid fa-envelope"><a href="mailto:ujjwal2392003@gmail.com">ujjwal2392003@gmail.com</a></li>
+              <li class="icon brands fa-linkedin"><a href="https://www.linkedin.com/in/ujjwal-singh-616908226/" target="_blank" rel="noopener">LinkedIn</a></li>
+              <li class="icon brands fa-github"><a href="https://github.com/UjJwAl092003" target="_blank" rel="noopener">GitHub</a></li>
+            </ul>
+          </section>
+
           <footer id="footer">
             <p class="copyright">
-              © Ujjwal Singh. Building in Public. Learning Never Stops.
+              &copy; Ujjwal Singh. Building in Public. Learning Never Stops.
             </p>
           </footer>
         </div>
@@ -125,6 +193,5 @@
     <script src="assets/js/breakpoints.min.js"></script>
     <script src="assets/js/util.js"></script>
     <script src="assets/js/main.js"></script>
-    <script src="assets/js/debug-instrumentation-entry.js"></script>
   </body>
 </html>

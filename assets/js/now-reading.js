@@ -1,6 +1,6 @@
 (function () {
   async function loadManifest(manifestUrl) {
-    const res = await fetch(manifestUrl, { cache: "no-store" });
+    const res = await fetch(manifestUrl);
     if (!res.ok) throw new Error(`Manifest load failed: ${res.status}`);
     return res.json();
   }
@@ -18,8 +18,6 @@
   }
 
   async function init() {
-    if (window.__debugInstrumentation && window.__debugInstrumentation.initLog)
-      window.__debugInstrumentation.initLog("now-reading", "now-reading");
     const root = document.getElementById("now-reading");
     if (!root) return;
 

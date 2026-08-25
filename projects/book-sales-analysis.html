@@ -1,0 +1,214 @@
+<!doctype html>
+<!-- Book Sales & Ratings Analysis - Project Detail -->
+<html>
+  <head>
+    <title>Book Sales & Ratings Analysis | Ujjwal Singh</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=no"
+    />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/dark-theme.css" />
+    <link rel="stylesheet" href="../assets/css/blog.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github-dark.min.css"
+    />
+  </head>
+  <body class="is-preload">
+    <div id="wrapper">
+      <div id="main">
+        <div class="inner">
+          <header id="header">
+            <a href="../index.html" class="logo"
+              ><strong>Ujjwal Singh</strong> • Machine Learning</a>
+            <ul class="icons">
+              <li>
+                <a
+                  href="https://github.com/UjJwAl092003"
+                  target="_blank"
+                  rel="noopener"
+                  class="icon brands fa-github"
+                  ><span class="label">GitHub</span></a>
+              </li>
+              <li>
+                <a
+                  href="https://www.linkedin.com/in/ujjwal-singh-616908226/"
+                  target="_blank"
+                  rel="noopener"
+                  class="icon brands fa-linkedin"
+                  ><span class="label">LinkedIn</span></a>
+              </li>
+              <li>
+                <a
+                  href="mailto:ujjwal2392003@gmail.com"
+                  class="icon solid fa-envelope"
+                  ><span class="label">Email</span></a>
+              </li>
+            </ul>
+          </header>
+
+          <section>
+            <div
+              id="project-root"
+              data-readme="book-sales-analysis/README.md"
+            ></div>
+          </section>
+        </div>
+      </div>
+
+      <div id="sidebar">
+        <div class="inner">
+          <nav id="menu">
+            <header class="major">
+              <h2>Menu</h2>
+            </header>
+            <ul>
+              <li><a href="../index.html">Home</a></li>
+              <li><a href="../blogs.html">Blogs</a></li>
+              <li><a href="../projects.html">Projects</a></li>
+              <li><a href="../resume.html">Resume</a></li>
+              <li><a href="../contact.html">Contact</a></li>
+            </ul>
+          </nav>
+
+          <footer id="footer">
+            <p class="copyright">
+              &copy; Ujjwal Singh. Building in Public. Learning Never Stops.
+            </p>
+          </footer>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.0/dist/purify.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="../assets/js/browser.min.js"></script>
+    <script src="../assets/js/breakpoints.min.js"></script>
+    <script src="../assets/js/util.js"></script>
+    <script src="../assets/js/main.js"></script>
+
+    <script>
+      (function () {
+        var root = document.getElementById("project-root");
+        if (!root) return;
+        var readmePath = root.getAttribute("data-readme");
+        if (!readmePath) return;
+
+        marked.setOptions({
+          gfm: true,
+          breaks: false,
+          headerIds: true,
+        });
+
+        fetch(readmePath)
+          .then(function (res) {
+            if (!res.ok) throw new Error("Failed to load README.md");
+            return res.text();
+          })
+          .then(function (md) {
+            var html = marked.parse(md);
+            var clean = DOMPurify.sanitize(html, {
+              ADD_ATTR: ["target"],
+            });
+
+            root.innerHTML =
+              '<article class="blog-article">' +
+              '<header class="blog-header">' +
+              '<h1>Book Sales &amp; Ratings Analysis</h1>' +
+              '<div class="blog-meta">' +
+              '<span class="blog-meta-item"><strong>Data Analysis</strong></span>' +
+              '<span class="blog-meta-dot">&bull;</span>' +
+              "<span>Python, Pandas, Matplotlib, Seaborn</span>" +
+              "</div>" +
+              "</header>" +
+              '<div class="blog-layout">' +
+              '<aside id="project-toc" class="blog-toc-wrap"></aside>' +
+              '<main id="project-content" class="blog-content-wrap">' +
+              clean +
+              "</main>" +
+              "</div>" +
+              '<footer class="blog-nav" style="margin-top: 3rem;">' +
+              '<div class="blog-nav-left">' +
+              '<a class="button" href="../projects.html">&larr; Back to Projects</a>' +
+              "</div>" +
+              '<div class="blog-nav-right">' +
+              '<a class="button" href="book-sales-analysis/Book_Sales_Analysis.ipynb" download style="background: #1a5e1a; border-color: #1a5e1a; color: #fff !important;">' +
+              "&#x1F4E5; Download Jupyter Notebook</a>" +
+              "</div>" +
+              "</footer>" +
+              "</article>";
+
+            var content = document.getElementById("project-content");
+            if (content) {
+              var headings = content.querySelectorAll("h2, h3");
+              if (headings.length > 0) {
+                var tocHtml = '<nav class="blog-toc">';
+                tocHtml +=
+                  '<header class="blog-toc-header">Table of Contents</header>';
+                tocHtml += "<ul>";
+                headings.forEach(function (h) {
+                  if (!h.id) {
+                    var id = h.textContent
+                      .toLowerCase()
+                      .replace(/[^a-z0-9\s-]/g, "")
+                      .replace(/\s+/g, "-")
+                      .replace(/-+/g, "-")
+                      .trim();
+                    h.id = id;
+                  }
+                  var indent =
+                    h.tagName === "H3" ? ' class="toc-indent"' : "";
+                  tocHtml +=
+                    "<li" +
+                    indent +
+                    '><a href="#' +
+                    h.id +
+                    '">' +
+                    h.textContent +
+                    "</a></li>";
+                });
+                tocHtml += "</ul></nav>";
+
+                var tocWrap = document.getElementById("project-toc");
+                if (tocWrap) {
+                  tocWrap.innerHTML = tocHtml;
+                  tocWrap.querySelectorAll("a").forEach(function (a) {
+                    a.addEventListener("click", function (e) {
+                      e.preventDefault();
+                      var id = a.getAttribute("href").slice(1);
+                      var target = document.getElementById(id);
+                      if (target) {
+                        target.scrollIntoView({
+                          behavior: "smooth",
+                          block: "start",
+                        });
+                      }
+                    });
+                  });
+                }
+              } else {
+                var tocWrap = document.getElementById("project-toc");
+                if (tocWrap) tocWrap.style.display = "none";
+              }
+            }
+
+            if (window.hljs) window.hljs.highlightAll();
+          })
+          .catch(function (err) {
+            root.innerHTML =
+              '<div class="box"><h2>Failed to load project</h2><p>' +
+              err.message +
+              "</p>" +
+              '<a class="button" href="../projects.html">&larr; Back to Projects</a>' +
+              "</div>";
+          });
+      })();
+    </script>
+  </body>
+</html>
