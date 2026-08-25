@@ -1,13 +1,23 @@
 [
   {
+    "id": "ai-playground",
+    "title": "AI Playground",
+    "description": "Interactive AI/ML learning platform built with Python and Django covering 5+ core topics including NumPy, Pandas, and Machine Learning algorithms, with 300+ MCQs, 30+ hands-on coding exercises, automated tests, progress tracking, and an admin dashboard.",
+    "technologies": ["Python", "Django", "NumPy", "Pandas", "Scikit-learn"],
+    "github": "https://github.com/UjJwAl092003",
+    "featured": true,
+    "date": "2026-07-01"
+  },
+  {
     "id": "book-sales-analysis",
     "title": "Book Sales & Ratings Analysis",
     "description": "Exploratory data analysis of a multi-genre book catalog, digging into pricing, genre performance, author reputation, and sales trends to find actionable publisher insights.",
     "technologies": ["Python", "Pandas", "NumPy", "Matplotlib", "Seaborn", "Jupyter"],
     "github": "https://github.com/UjJwAl092003/portfolio-ujjwal/tree/main/projects/book-sales-analysis",
     "liveDemo": "projects/book-sales-analysis.html",
-    "featured": true,
+    "featured": false,
     "date": "2026-07-20"
   }
 ]
+
 

@@ -12,7 +12,7 @@ This website showcases my journey toward becoming a Machine Learning Engineer. I
 
 ## About
 
-I'm Ujjwal Singh, a Computer Science graduate from Madan Mohan Malaviya University of Technology (MMMUT).
+I'm Ujjwal Singh, a Computer Science graduate from Madan Mohan Malaviya University of Technology (MMMUT) and incoming M.Tech student at National Institute of Technology Surathkal (NIT Surathkal).
 
 My interest in Machine Learning grew during my GATE preparation, when studying Linear Algebra led me to Professor Gilbert Strang's MIT lectures. Understanding the mathematics behind Machine Learning completely changed how I approached the field.
 
@@ -46,6 +46,7 @@ Today, I focus on learning the theory behind intelligent systems, building proje
 
 - Marked.js
 - Highlight.js
+- KaTeX
 
 ### Deployment
 
@@ -127,11 +128,13 @@ Open the project in VS Code and run it using Live Server.
 
 ## Connect With Me
 
-- LinkedIn: https://www.linkedin.com/in/ujjwal-singh-616908226/
+- LinkedIn: https://www.linkedin.com/in/ujjwal-singh
 - GitHub: https://github.com/UjJwAl092003
 - Email: ujjwal2392003@gmail.com
+- Phone: +91-7355745392
 - Portfolio: https://ujjwal092003.github.io/portfolio-ujjwal/
 
 ---
 
 ⭐ If you like this portfolio, consider giving the repository a star.
+
