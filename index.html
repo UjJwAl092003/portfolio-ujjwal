@@ -197,7 +197,9 @@
       if (!grid) return;
 
       var fallbackProjects = [
-        {"id":"book-sales-analysis","title":"Book Sales & Ratings Analysis","description":"Exploratory data analysis of a multi-genre book catalog, digging into pricing, genre performance, author reputation, and sales trends to find actionable publisher insights.","technologies":["Python","Pandas","NumPy","Matplotlib","Seaborn","Jupyter"],"featured":true,"date":"2026-07-20"}
+        {"id":"sales-eda-practice","title":"Sales EDA Practice Project","description":"Exploratory data analysis on a global sales dataset using Python, Pandas, NumPy, and Matplotlib to analyze regional revenue, item type demand, sales channel splits, and profit performance.","technologies":["Python","Pandas","NumPy","Matplotlib","Seaborn","Jupyter"],"github":"https://github.com/UjJwAl092003/sales-eda-practice","featured":true,"date":"2026-08-25"},
+        {"id":"book-sales-analysis","title":"Book Sales & Ratings Analysis","description":"Exploratory data analysis of a multi-genre book catalog, digging into pricing, genre performance, author reputation, and sales trends to find actionable publisher insights.","technologies":["Python","Pandas","NumPy","Matplotlib","Seaborn","Jupyter"],"liveDemo":"projects/book-sales-analysis.html","github":"https://github.com/UjJwAl092003/portfolio-ujjwal/tree/main/projects/book-sales-analysis","featured":true,"date":"2026-07-20"},
+        {"id":"ai-playground","title":"AI Playground","description":"Interactive AI/ML learning platform built with Python and Django covering 5+ core topics including NumPy, Pandas, and Machine Learning algorithms, with 300+ MCQs, 30+ hands-on coding exercises, automated tests, progress tracking, and an admin dashboard.","technologies":["Python","Django","NumPy","Pandas","Scikit-learn"],"github":"https://github.com/UjJwAl092003/ai-playground","featured":true,"date":"2026-07-01"}
       ];
 
       function renderProjects(projects) {
@@ -213,13 +215,15 @@
 
         grid.innerHTML = latest.map(function(p){
           var techs = (p.technologies || []).map(function(t){ return '<span class="tech-badge">' + t + "</span>"; }).join("");
-          var url = "projects/" + p.id + ".html";
+          var url = p.liveDemo || p.github || ("projects/" + p.id + ".html");
+          var isExternal = url.startsWith("http://") || url.startsWith("https://");
+          var targetAttr = isExternal ? ' target="_blank" rel="noopener"' : '';
           return '<article>' +
             '<div class="content" style="padding-top:0.25rem;">' +
             '<h3 style="margin-bottom:0.35rem;">' + p.title + '</h3>' +
             '<p style="margin:0.5rem 0 0.75rem 0;font-size:0.95rem;color:inherit;">' + p.description + '</p>' +
             '<div style="margin-bottom:1rem;display:flex;flex-wrap:wrap;gap:0.4rem;">' + techs + '</div>' +
-            '<ul class="actions"><li><a href="' + url + '" class="button">View Project</a></li></ul>' +
+            '<ul class="actions"><li><a href="' + url + '" class="button"' + targetAttr + '>View Project</a></li></ul>' +
             '</div></article>';
         }).join("");
       }
