@@ -295,8 +295,9 @@
 
   .blog-toc-wrap {
     position: static;
-    order: 2;
+    order: -1;
     height: auto;
+    margin-bottom: 1.5rem;
   }
 
   .blog-toc {
@@ -306,12 +307,13 @@
 }
 
 @media (max-width: 680px) {
-  /* Mobile: TOC becomes a regular collapsible block (hidden by default via <details>) */
+  /* Mobile: TOC becomes a regular collapsible block positioned before article content */
   .blog-layout {
     gap: 1.25rem;
   }
 
   .blog-toc-wrap {
-    order: 2;
+    order: -1;
+    margin-bottom: 1.25rem;
   }
 }

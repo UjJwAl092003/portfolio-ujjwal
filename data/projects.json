@@ -14,6 +14,7 @@
     "description": "Exploratory data analysis on a global sales dataset using Python, Pandas, NumPy, and Matplotlib. Analyzes order distributions, channel splits, regional performance, and revenue trends with visual insights.",
     "technologies": ["Python", "Pandas", "NumPy", "Matplotlib", "Seaborn", "Jupyter"],
     "github": "https://github.com/UjJwAl092003/sales-eda-practice",
+    "liveDemo": "projects/sales-eda-practice.html",
     "featured": true,
     "date": "2026-08-25"
   },

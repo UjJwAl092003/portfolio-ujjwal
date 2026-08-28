@@ -28,8 +28,16 @@
 
   // ... stopped resizing.
   var resizeTimeout;
+  var lastWindowWidth = $window.width();
 
   $window.on("resize", function () {
+    var currentWidth = $window.width();
+    // Ignore height-only resize events triggered by mobile URL bar show/hide during scrolling
+    if (currentWidth === lastWindowWidth) {
+      return;
+    }
+    lastWindowWidth = currentWidth;
+
     // Mark as resizing.
     $body.addClass("is-resizing");
 
@@ -98,8 +106,8 @@
 
   // Events.
 
-  // Link clicks.
-  $sidebar.on("click", "a", function (event) {
+  // Link clicks inside sidebar navigation (excluding toggle, openers, and in-page anchor links).
+  $sidebar.on("click", "a:not(.toggle):not(.opener)", function (event) {
     // >large? Bail.
     if (breakpoints.active(">large")) return;
 
@@ -108,21 +116,21 @@
       href = $a.attr("href"),
       target = $a.attr("target");
 
+    // Check URL: ignore empty, hash-only, or anchor links.
+    if (!href || href === "#" || href === "" || href.startsWith("#")) return;
+
     // Prevent default.
     event.preventDefault();
     event.stopPropagation();
 
-    // Check URL.
-    if (!href || href == "#" || href == "") return;
-
     // Hide sidebar.
     $sidebar.addClass("inactive");
 
-    // Redirect to href.
+    // Redirect to href after transition.
     setTimeout(function () {
-      if (target == "_blank") window.open(href);
+      if (target === "_blank") window.open(href);
       else window.location.href = href;
-    }, 500);
+    }, 400);
   });
 
   // Prevent certain events inside the panel from bubbling.
@@ -155,9 +163,11 @@
       .on("scroll.sidebar-lock", function () {
         var x, y;
 
-        // <=large? Bail.
+        // <=large? Bail without layout thrashing.
         if (breakpoints.active("<=large")) {
-          $sidebar_inner.data("locked", 0).css("position", "").css("top", "");
+          if ($sidebar_inner.data("locked") !== 0) {
+            $sidebar_inner.data("locked", 0).css("position", "").css("top", "");
+          }
           return;
         }
 
