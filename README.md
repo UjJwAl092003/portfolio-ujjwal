@@ -1,8 +1,8 @@
-# Ujjwal Singh | Machine Learning Portfolio
+# Ujjwal Singh | Portfolio
 
 Welcome to my personal portfolio website.
 
-This website showcases my journey toward becoming a Machine Learning Engineer. It serves as a central place where I document my learning, share technical blogs, showcase projects, and continuously improve my understanding of Machine Learning from first principles.
+This website showcases my journey as a Computer Science student exploring Machine Learning and Data Science. It serves as a central place where I document my learning from first principles, share technical blogs, showcase hands-on projects, and continuously build strong foundations.
 
 ## 🌐 Live Website
 
@@ -12,11 +12,11 @@ This website showcases my journey toward becoming a Machine Learning Engineer. I
 
 ## About
 
-I'm Ujjwal Singh, a Computer Science graduate from Madan Mohan Malaviya University of Technology (MMMUT) and incoming M.Tech student at National Institute of Technology Surathkal (NIT Surathkal).
+I'm Ujjwal Singh, a Computer Science graduate from Madan Mohan Malaviya University of Technology (MMMUT) and M.Tech student at National Institute of Technology Surathkal (NIT Surathkal).
 
-My interest in Machine Learning grew during my GATE preparation, when studying Linear Algebra led me to Professor Gilbert Strang's MIT lectures. Understanding the mathematics behind Machine Learning completely changed how I approached the field.
+My interest in Machine Learning grew during my GATE preparation, when studying Linear Algebra led me to Professor Gilbert Strang's MIT lectures. Understanding the mathematics behind algorithms inspired me to learn the field from first principles.
 
-Today, I focus on learning the theory behind intelligent systems, building projects, and documenting everything I learn through technical blogs.
+Today, I focus on understanding the theory behind intelligent systems, building practical projects, and documenting my progress through technical blogs.
 
 ---
 
@@ -58,23 +58,12 @@ Today, I focus on learning the theory behind intelligent systems, building proje
 
 - Home
 - About Me
-- Learning Journey
+- Currently Learning
+- Technical Skills
 - Blogs
 - Projects
 - Resume
 - Contact
-
----
-
-## Machine Learning Roadmap
-
-- Linear Algebra
-- Probability & Statistics
-- Python
-- Machine Learning
-- Deep Learning
-- MLOps
-- Research
 
 ---
 
