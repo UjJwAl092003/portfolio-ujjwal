@@ -1,5 +1,24 @@
 [
   {
+    "slug": "multicollinearity-explained",
+    "title": "Multicollinearity, Explained Simply (With Real Numbers, Not Just Theory)",
+    "description": "Why two predictor columns can secretly carry redundant information, how multicollinearity breaks OLS matrix inversion, why it hurts inference but not prediction, and how to detect and remove it.",
+    "date": "2026-09-03",
+    "category": "Machine Learning Algorithms",
+    "readingTime": "8 min read",
+    "tags": [
+      "Machine Learning",
+      "Multicollinearity",
+      "Linear Regression",
+      "Statistics",
+      "Data Science",
+      "Feature Selection"
+    ],
+    "featuredImage": "assets/images/blogs/multicollinearity/mc_1_scatter_intuition.png",
+    "author": "Ujjwal Singh",
+    "markdownFile": "blogs/multicollinearity-explained.md"
+  },
+  {
     "slug": "evaluation_metrics_explained",
     "title": "Evaluation Metrics in Machine Learning (Confusion Matrix, Precision, Recall, F1 Score)",
     "description": "A complete beginner-friendly guide to classification evaluation metrics: confusion matrix, accuracy, precision, recall, and F1 score — with intuition, real-world examples, and the mathematical reasoning behind every formula.",
