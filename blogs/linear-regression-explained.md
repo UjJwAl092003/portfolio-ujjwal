@@ -1,15 +1,3 @@
----
-title: "Linear Regression, Explained Like You're Pricing Insurance for the First Time"
-slug: "linear-regression-explained"
-date: "2026-04-05"
-category: "Machine Learning"
-readingTime: "12 min read"
-description: "A beginner-friendly walkthrough of Ordinary Least Squares (OLS) Linear Regression, deriving the normal equation and evaluating assumptions."
-tags: ["Machine Learning", "Linear Regression", "Python", "Data Science"]
-featuredImage: "../assets/images/blogs/linear-regression/best_fit_line.png"
-author: "Ujjwal Singh"
----
-
 # Linear Regression, Explained Like You're Pricing Insurance for the First Time
 
 Imagine you work at a health insurance company and a new customer walks through the door. You need to decide how much to charge them. No formula exists yet. Just a spreadsheet with 1,338 past customers and what they were actually charged.

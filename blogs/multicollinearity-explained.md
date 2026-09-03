@@ -1,16 +1,3 @@
----
-title: "Multicollinearity, Explained Simply (With Real Numbers, Not Just Theory)"
-slug: "multicollinearity-explained"
-date: "2026-09-03"
-category: "Machine Learning Algorithms"
-readingTime: "8 min read"
-description: "Why two predictor columns can secretly carry redundant information, how multicollinearity breaks OLS matrix inversion, why it hurts inference but not prediction, and how to detect and remove it."
-tags: ["Machine Learning", "Multicollinearity", "Linear Regression", "Statistics", "Data Science", "Feature Selection"]
-featuredImage: "assets/images/blogs/multicollinearity/mc_1_scatter_intuition.png"
-author: "Ujjwal Singh"
-markdownFile: "blogs/multicollinearity-explained.md"
----
-
 # Multicollinearity, Explained Simply (With Real Numbers, Not Just Theory)
 
 *Why two "different" columns in your data can secretly be saying the same thing*
